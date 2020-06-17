@@ -1,0 +1,3 @@
+{
+  "mongoURI": "mongodb+srv://Luke:Luke999@cluster0-rmmpd.azure.mongodb.net/bottle-bank?retryWrites=true&w=majority"
+}

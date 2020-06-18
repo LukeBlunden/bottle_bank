@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import {
   Dialog,
   DialogTitle,
@@ -13,6 +12,9 @@ import {
   Switch,
   Button,
 } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+
+import { addList } from "../../actions/listActions";
 
 const currencies = [
   { value: "USD", label: "$" },
@@ -29,13 +31,11 @@ const FormModal = (props) => {
     shared: false,
   });
   const [open, setOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
-    axios
-      .post("/api/lists", newList)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    dispatch(addList(newList));
     setOpen(false);
   };
 

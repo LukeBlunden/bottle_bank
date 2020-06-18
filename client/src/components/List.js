@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Container, Typography, Card, Button } from "@material-ui/core";
 import ListItemModal from "./modals/ListItemModal";
+import ListTable from "./ListTable";
 
 const List = (props) => {
   const [open, setOpen] = useState(false);
@@ -13,9 +14,7 @@ const List = (props) => {
         <Typography variant="caption">
           Shared: {`${props.list.shared}`}
         </Typography>
-        {props.list.items.map((item) => (
-          <p key={item.name}>{item.name}</p>
-        ))}
+        <ListTable items={props.list.items} />
         <br />
         <Button
           variant="contained"

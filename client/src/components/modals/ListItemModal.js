@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { Dialog, DialogContent, TextField, Button } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import { addItem } from "../../actions/listActions";
 
 const ListItemModal = (props) => {
   const [name, setName] = useState("");
+  const dispatch = useDispatch();
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
-    axios.post("/api/lists/list", { name, id: props.id });
+    dispatch(addItem({ name, id: props.id }));
+    // axios.post("/api/lists/list", { name, id: props.id });
     props.closeHandler();
   };
 

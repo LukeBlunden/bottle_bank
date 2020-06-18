@@ -30,9 +30,13 @@ router.post("/", (req, res) => {
 // @desc Add an item to a list
 // @access public
 router.post("/list", (req, res) => {
-  List.findByIdAndUpdate(req.body.id, {
-    $push: { items: { name: req.body.name, total: 0 } },
-  }).then((list) => res.json(list));
+  List.findByIdAndUpdate(
+    req.body.id,
+    {
+      $push: { items: { name: req.body.name, total: 0 } },
+    },
+    { new: true }
+  ).then((list) => res.json(list));
 });
 
 module.exports = router;

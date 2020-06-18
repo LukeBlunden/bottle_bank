@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import "./App.css";
 
@@ -19,14 +19,6 @@ function App() {
         <CssBaseline />
         <div className="App">
           <Navbar />
-          {/* <Button
-            variant="contained"
-            color="primary"
-            onClick={() => setOpen(true)}
-          >
-            Add list
-          </Button>
-          <FormModal open={open} closeHandler={() => setOpen(false)} /> */}
           <FormModal />
           <ListContainer />
         </div>

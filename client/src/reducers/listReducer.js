@@ -1,4 +1,4 @@
-import { GET_LISTS, LOADING_LISTS } from "../actions/types";
+import { GET_LISTS, ADD_LIST, LOADING_LISTS, ADD_ITEM } from "../actions/types";
 
 const initialState = {
   lists: [],
@@ -12,6 +12,25 @@ export default function (state = initialState, action) {
         ...state,
         lists: action.payload,
         loading: false,
+      };
+    case ADD_LIST:
+      return {
+        ...state,
+        lists: [...state.lists, action.payload],
+      };
+    case ADD_ITEM:
+      const updatedLists = [...state.lists];
+      console.log(action.payload);
+      updatedLists.map((list) => {
+        if (list._id === action.payload._id) {
+          list.items = action.payload.items;
+        }
+        return list;
+      });
+      console.log(updatedLists);
+      return {
+        ...state,
+        lists: updatedLists,
       };
     case LOADING_LISTS:
       return {

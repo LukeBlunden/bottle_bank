@@ -29,14 +29,23 @@ router.post("/", (req, res) => {
 // @route POST api/lists/list
 // @desc Add an item to a list
 // @access public
-router.post("/list", (req, res) => {
+router.post("/category", (req, res) => {
   List.findByIdAndUpdate(
     req.body.id,
     {
-      $push: { items: { name: req.body.name, total: 0 } },
+      $push: { items: { name: req.body.name, log: [] } },
     },
     { new: true }
   ).then((list) => res.json(list));
 });
 
 module.exports = router;
+
+const item = {
+  id: "xxx",
+  shared: false,
+  currency: "String",
+  items: [
+    { name: "name", transaction: [{ name: "name", amount: 0, date: Date() }] },
+  ],
+};

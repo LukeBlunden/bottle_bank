@@ -6,11 +6,21 @@ import {
   TableRow,
   TableHead,
   TableBody,
+  TextField,
+  InputAdornment,
 } from "@material-ui/core";
+
+const currencies = {
+  USD: "$",
+  EUR: "€",
+  GBP: "£",
+  BTC: "฿",
+  JPY: "¥",
+};
 
 const ListTable = (props) => {
   return (
-    <TableContainer>
+    <TableContainer style={{ padding: "10px" }}>
       <Table>
         <TableHead>
           <TableRow>
@@ -22,7 +32,9 @@ const ListTable = (props) => {
           {props.items.map((item) => (
             <TableRow>
               <TableCell>{item.name}</TableCell>
-              <TableCell align="right">{item.total}</TableCell>
+              <TableCell align="right" width="40%">
+                {item.total}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

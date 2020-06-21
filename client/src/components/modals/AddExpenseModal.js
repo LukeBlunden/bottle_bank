@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Dialog, DialogContent, TextField, Button } from "@material-ui/core";
 import { useDispatch } from "react-redux";
-import { addItem } from "../../actions/listActions";
+import { addCategory } from "../../actions/listActions";
 
 const ListItemModal = (props) => {
   const [name, setName] = useState("");
@@ -9,8 +9,7 @@ const ListItemModal = (props) => {
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
-    dispatch(addItem({ name, id: props.id }));
-    // axios.post("/api/lists/list", { name, id: props.id });
+    dispatch(addCategory({ name, id: props.id }));
     props.closeHandler();
   };
 
@@ -19,7 +18,7 @@ const ListItemModal = (props) => {
       <form onSubmit={formSubmitHandler}>
         <DialogContent>
           <TextField
-            label="Item name"
+            label="Expense name"
             margin="dense"
             type="text"
             fullWidth

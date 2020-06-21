@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Container, Typography, Card, Button } from "@material-ui/core";
-import ListItemModal from "./modals/ListItemModal";
+import ListCategoryModal from "./modals/ListCategoryModal";
+import AddExpenseModal from "./modals/addExpenseModal";
 import ListTable from "./ListTable";
 
 const List = (props) => {
-  const [open, setOpen] = useState(false);
+  const [catOpen, setCatOpen] = useState(false);
+  const [itemOpen, setItemOpen] = useState(false);
 
   return (
     <Container style={{ marginBottom: "10px" }}>
@@ -14,19 +16,30 @@ const List = (props) => {
         <Typography variant="caption">
           Shared: {`${props.list.shared}`}
         </Typography>
-        <ListTable items={props.list.items} />
+        <ListTable items={props.list.items} currency={props.list.currency} />
         <br />
         <Button
           variant="contained"
           color="primary"
-          onClick={() => setOpen(true)}
+          onClick={() => setCatOpen(true)}
         >
-          +
+          + category
         </Button>
-        <ListItemModal
-          open={open}
-          closeHandler={() => setOpen(false)}
+        <ListCategoryModal
+          open={catOpen}
+          closeHandler={() => setCatOpen(false)}
           id={props.list._id}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => setItemOpen(true)}
+        >
+          + item
+        </Button>
+        <AddExpenseModal
+          open={itemOpen}
+          closeHandler={() => setItemOpen(false)}
         />
       </Card>
     </Container>

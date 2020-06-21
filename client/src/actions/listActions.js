@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GET_LISTS, ADD_LIST, LOADING_LISTS, ADD_ITEM } from "./types";
+import { GET_LISTS, ADD_LIST, LOADING_LISTS, ADD_CATEGORY } from "./types";
 
 export const getLists = () => (dispatch) => {
   dispatch({ type: LOADING_LISTS });
@@ -16,9 +16,9 @@ export const addList = (newList) => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const addItem = (item) => (dispatch) => {
+export const addCategory = (item) => (dispatch) => {
   axios
-    .post("/api/lists/list", item)
-    .then((res) => dispatch({ type: ADD_ITEM, payload: res.data }))
+    .post("/api/lists/category", item)
+    .then((res) => dispatch({ type: ADD_CATEGORY, payload: res.data }))
     .catch((err) => console.log(err));
 };

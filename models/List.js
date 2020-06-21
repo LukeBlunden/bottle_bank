@@ -12,7 +12,7 @@ const ListSchema = new Schema({
   },
   currency: {
     type: String,
-    default: "$",
+    default: "EUR",
   },
   items: {
     type: Array,
@@ -21,14 +21,3 @@ const ListSchema = new Schema({
 });
 
 module.exports = List = mongoose.model("list", ListSchema);
-
-// {
-//   "id": "oxhdyufgih",
-//   "name": "General shared",
-//   "shared status": true,
-//   "currency": "AUD",
-//   "items": [
-//     { "name": "groceries", "total": "100" },
-//     { "name": "rent", "total": "660" }
-//   ]
-// }

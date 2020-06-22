@@ -33,10 +33,23 @@ router.post("/category", (req, res) => {
   List.findByIdAndUpdate(
     req.body.id,
     {
-      $push: { items: { name: req.body.name, log: [] } },
+      $push: { categories: { name: req.body.name } },
     },
     { new: true }
   ).then((list) => res.json(list));
+});
+
+router.post("/expense", (req, res) => {
+  const { description, amount, category, selectedDate } = req.body;
+  List.findByIdAndUpdate(
+    req.body.id,
+    {
+      $push: { expenseLog: { description, amount, category, selectedDate } },
+    },
+    { new: true }
+  )
+    .then((list) => res.json(list))
+    .catch((err) => console.log(err));
 });
 
 module.exports = router;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, Typography, Card, Button } from "@material-ui/core";
 import ListCategoryModal from "./modals/ListCategoryModal";
-import AddExpenseModal from "./modals/addExpenseModal";
+import AddExpenseModal from "./modals/AddExpenseModal";
 import ListTable from "./ListTable";
 
 const List = (props) => {
@@ -16,7 +16,11 @@ const List = (props) => {
         <Typography variant="caption">
           Shared: {`${props.list.shared}`}
         </Typography>
-        <ListTable items={props.list.items} currency={props.list.currency} />
+        <ListTable
+          categories={props.list.categories}
+          expenseLog={props.list.expenseLog}
+          currency={props.list.currency}
+        />
         <br />
         <Button
           variant="contained"
@@ -40,6 +44,8 @@ const List = (props) => {
         <AddExpenseModal
           open={itemOpen}
           closeHandler={() => setItemOpen(false)}
+          id={props.list._id}
+          categories={props.list.categories}
         />
       </Card>
     </Container>

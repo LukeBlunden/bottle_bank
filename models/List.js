@@ -14,7 +14,11 @@ const ListSchema = new Schema({
     type: String,
     default: "EUR",
   },
-  items: {
+  categories: {
+    type: Array,
+    default: [],
+  },
+  expenseLog: {
     type: Array,
     default: [],
   },

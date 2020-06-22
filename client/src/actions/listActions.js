@@ -1,5 +1,11 @@
 import axios from "axios";
-import { GET_LISTS, ADD_LIST, LOADING_LISTS, ADD_CATEGORY } from "./types";
+import {
+  GET_LISTS,
+  ADD_LIST,
+  LOADING_LISTS,
+  ADD_CATEGORY,
+  ADD_EXPENSE,
+} from "./types";
 
 export const getLists = () => (dispatch) => {
   dispatch({ type: LOADING_LISTS });
@@ -20,5 +26,12 @@ export const addCategory = (item) => (dispatch) => {
   axios
     .post("/api/lists/category", item)
     .then((res) => dispatch({ type: ADD_CATEGORY, payload: res.data }))
+    .catch((err) => console.log(err));
+};
+
+export const addExpense = (expense) => (dispatch) => {
+  axios
+    .post("/api/lists/expense", expense)
+    .then((res) => dispatch({ type: ADD_EXPENSE, payload: res.data }))
     .catch((err) => console.log(err));
 };

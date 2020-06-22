@@ -19,25 +19,42 @@ const currencies = {
 };
 
 const ListTable = (props) => {
+  const rows = props.categories.map((category) => {
+    let expenses = props.expenseLog.filter(
+      (expense) => expense.category === category.name
+    );
+    const total = expenses.reduce(
+      (acc, expense) => acc + parseFloat(expense.amount, 10),
+      0
+    );
+    return (
+      <React.Fragment>
+        <TableRow>
+          <TableCell>{category.name}</TableCell>
+          <TableCell>{total}</TableCell>
+        </TableRow>
+        <TableRow>
+          {expenses.map((expense) => (
+            <p style={{ color: "red" }}>
+              {expense.description} - {expense.amount}
+            </p>
+          ))}
+        </TableRow>
+      </React.Fragment>
+    );
+  });
+
   return (
     <TableContainer style={{ padding: "10px" }}>
       <Table>
         <TableHead>
           <TableRow>
+            <TableCell />
             <TableCell>Item</TableCell>
             <TableCell align="right">Total</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {props.items.map((item) => (
-            <TableRow>
-              <TableCell>{item.name}</TableCell>
-              <TableCell align="right" width="40%">
-                {item.total}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
+        <TableBody>{rows}</TableBody>
       </Table>
     </TableContainer>
   );

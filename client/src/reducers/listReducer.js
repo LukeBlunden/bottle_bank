@@ -3,6 +3,7 @@ import {
   ADD_LIST,
   LOADING_LISTS,
   ADD_CATEGORY,
+  ADD_EXPENSE,
 } from "../actions/types";
 
 const initialState = {
@@ -23,11 +24,17 @@ export default function (state = initialState, action) {
         ...state,
         lists: [...state.lists, action.payload],
       };
+    case ADD_EXPENSE:
     case ADD_CATEGORY:
       const updatedLists = [...state.lists];
       updatedLists.map((list) => {
         if (list._id === action.payload._id) {
-          list.items = action.payload.items;
+          if (list.categories.length != action.payload.categories.length) {
+            list.categories = action.payload.categories;
+          }
+          if (list.expenseLog.length != action.payload.expenseLog.length) {
+            list.expenseLog = action.payload.expenseLog;
+          }
         }
         return list;
       });

@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import "./App.css";
 
@@ -9,20 +10,26 @@ import { CssBaseline } from "@material-ui/core";
 import FormModal from "./components/modals/FormModal";
 import ListContainer from "./components/ListsContainer";
 import Navbar from "./components/Navbar";
+import Dashboard from "./components/Dashboard";
 
 function App() {
-  // const [open, setOpen] = useState(false);
-
   return (
     <Provider store={store}>
-      <React.Fragment>
+      <BrowserRouter>
         <CssBaseline />
         <div className="App">
           <Navbar />
-          <FormModal />
-          <ListContainer />
+          <Switch>
+            <Route path="/expenses">
+              <FormModal />
+              <ListContainer />
+            </Route>
+            <Route path="/">
+              <Dashboard />
+            </Route>
+          </Switch>
         </div>
-      </React.Fragment>
+      </BrowserRouter>
     </Provider>
   );
 }

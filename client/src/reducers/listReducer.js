@@ -29,10 +29,10 @@ export default function (state = initialState, action) {
       const updatedLists = [...state.lists];
       updatedLists.map((list) => {
         if (list._id === action.payload._id) {
-          if (list.categories.length != action.payload.categories.length) {
+          if (list.categories.length !== action.payload.categories.length) {
             list.categories = action.payload.categories;
           }
-          if (list.expenseLog.length != action.payload.expenseLog.length) {
+          if (list.expenseLog.length !== action.payload.expenseLog.length) {
             list.expenseLog = action.payload.expenseLog;
           }
         }

@@ -6,9 +6,8 @@ import {
   TableRow,
   TableHead,
   TableBody,
-  TextField,
-  InputAdornment,
 } from "@material-ui/core";
+import ListTableRow from "./ListTableRow";
 
 const currencies = {
   USD: "$",
@@ -19,30 +18,14 @@ const currencies = {
 };
 
 const ListTable = (props) => {
-  const rows = props.categories.map((category) => {
-    let expenses = props.expenseLog.filter(
-      (expense) => expense.category === category.name
-    );
-    const total = expenses.reduce(
-      (acc, expense) => acc + parseFloat(expense.amount, 10),
-      0
-    );
-    return (
-      <React.Fragment>
-        <TableRow>
-          <TableCell>{category.name}</TableCell>
-          <TableCell>{total}</TableCell>
-        </TableRow>
-        <TableRow>
-          {expenses.map((expense) => (
-            <p style={{ color: "red" }}>
-              {expense.description} - {expense.amount}
-            </p>
-          ))}
-        </TableRow>
-      </React.Fragment>
-    );
-  });
+  const tableRows = props.categories.map((category) => (
+    <ListTableRow
+      currencySymbol={currencies[props.currency]}
+      name={category.name}
+      expenseLog={props.expenseLog}
+      key={category.name}
+    />
+  ));
 
   return (
     <TableContainer style={{ padding: "10px" }}>
@@ -54,7 +37,7 @@ const ListTable = (props) => {
             <TableCell align="right">Total</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>{rows}</TableBody>
+        <TableBody>{tableRows}</TableBody>
       </Table>
     </TableContainer>
   );

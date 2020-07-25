@@ -36,7 +36,7 @@ const InnerTable = styled.table`
   }
 `;
 
-const ListTableRow = ({ name, expenseLog, currencySymbol }) => {
+const ExpenseTableRow = ({ name, expenseLog, currencySymbol }) => {
   const [open, setOpen] = useState(false);
 
   const expenses = expenseLog.filter((expense) => expense.category === name);
@@ -90,4 +90,4 @@ const ListTableRow = ({ name, expenseLog, currencySymbol }) => {
   );
 };
 
-export default ListTableRow;
+export default ExpenseTableRow;

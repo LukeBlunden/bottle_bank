@@ -15,9 +15,9 @@ import {
   MuiPickersUtilsProvider,
 } from "@material-ui/pickers";
 import { useDispatch } from "react-redux";
-import { addExpense } from "../../actions/listActions";
+import { addExpenseItem } from "../../actions/expensesActions";
 
-const ListItemModal = (props) => {
+const ItemModal = (props) => {
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState(null);
   const [category, setCategory] = useState("");
@@ -28,7 +28,13 @@ const ListItemModal = (props) => {
   const formSubmitHandler = (e) => {
     e.preventDefault();
     dispatch(
-      addExpense({ description, amount, category, selectedDate, id: props.id })
+      addExpenseItem({
+        description,
+        amount,
+        category,
+        selectedDate,
+        id: props.id,
+      })
     );
     props.closeHandler();
   };
@@ -91,4 +97,4 @@ const ListItemModal = (props) => {
   );
 };
 
-export default ListItemModal;
+export default ItemModal;

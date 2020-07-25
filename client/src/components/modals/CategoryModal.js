@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { Dialog, DialogContent, TextField, Button } from "@material-ui/core";
 import { useDispatch } from "react-redux";
-import { addCategory } from "../../actions/listActions";
+import { addExpenseCategory } from "../../actions/expensesActions";
 
-const ListItemModal = (props) => {
+const CategoryModal = (props) => {
   const [name, setName] = useState("");
   const dispatch = useDispatch();
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
-    dispatch(addCategory({ name, id: props.id }));
+    dispatch(addExpenseCategory({ name, id: props.id }));
     props.closeHandler();
   };
 
@@ -34,4 +34,4 @@ const ListItemModal = (props) => {
   );
 };
 
-export default ListItemModal;
+export default CategoryModal;

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import ListTableRow from "./ListTableRow";
+import ExpenseTableRow from "./ExpenseTableRow";
 
 const OuterTable = styled.table`
   display: grid;
@@ -31,9 +31,9 @@ const currencies = {
   JPY: "¥",
 };
 
-const ListTable = (props) => {
+const ExpenseTable = (props) => {
   const tableRows = props.categories.map((category) => (
-    <ListTableRow
+    <ExpenseTableRow
       currencySymbol={currencies[props.currency]}
       name={category.name}
       expenseLog={props.expenseLog}
@@ -57,4 +57,4 @@ const ListTable = (props) => {
   );
 };
 
-export default ListTable;
+export default ExpenseTable;

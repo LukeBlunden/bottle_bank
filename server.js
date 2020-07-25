@@ -23,7 +23,7 @@ mongoose
   .then(() => console.log("Mongo database connected"))
   .catch((err) => console.log("DB connection error: ", err));
 
-app.use("/api/lists/", require("./routes/api/lists"));
+app.use("/api/expenses/", require("./routes/api/expenses"));
 
 const port = process.env.PORT || 5000;
 

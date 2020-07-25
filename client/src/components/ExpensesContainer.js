@@ -1,24 +1,24 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getLists } from "../actions/listActions";
+import { getExpenses } from "../actions/expensesActions";
 
-import List from "./List";
-import FormModal from "./modals/FormModal";
+import ExpenseCard from "./ExpenseCard";
+import CardModal from "./modals/CardModal";
 
 const ExpensesContainer = (props) => {
   const dispatch = useDispatch();
-  const { lists, loading } = useSelector((state) => state.lists);
+  const { expenses, loading } = useSelector((state) => state.expenses);
 
   useEffect(() => {
-    dispatch(getLists());
+    dispatch(getExpenses());
   }, [dispatch]);
 
   return (
     <React.Fragment>
-      <FormModal />
+      <CardModal />
       {loading && <p>Loading...</p>}
-      {lists.map((list) => (
-        <List key={list._id} list={list} />
+      {expenses.map((expense) => (
+        <ExpenseCard key={expense._id} list={expense} />
       ))}
     </React.Fragment>
   );

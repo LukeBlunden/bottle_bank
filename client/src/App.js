@@ -10,7 +10,7 @@ import { CssBaseline } from "@material-ui/core";
 import ExpensesContainer from "./components/ExpensesContainer";
 import Navbar from "./components/Navbar";
 import Dashboard from "./components/Dashboard";
-import Income from "./components/Income";
+import IncomeContainer from "./components/IncomeContainer";
 
 function App() {
   return (
@@ -24,7 +24,7 @@ function App() {
               <ExpensesContainer />
             </Route>
             <Route path="/income">
-              <Income />
+              <IncomeContainer />
             </Route>
             <Route path="/">
               <Dashboard />

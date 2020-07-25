@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import ListCategoryModal from "./modals/ListCategoryModal";
-import AddExpenseModal from "./modals/AddExpenseModal";
-import ListTable from "./ListTable";
+import CategoryModal from "./modals/CategoryModal";
+import ItemModal from "./modals/ItemModal";
+import ExpenseTable from "./ExpenseTable";
 import Button from "./UI/Button";
 
 import { useDispatch } from "react-redux";
-import { deleteList } from "../actions/listActions";
+import { deleteExpenseCard } from "../actions/expensesActions";
 
 const ListContainer = styled.div`
   margin: 20px 20px 10px 20px;
@@ -22,7 +22,7 @@ const ListPanel = styled.div`
   border-radius: 10px;
 `;
 
-const List = (props) => {
+const ExpenseCard = (props) => {
   const [catOpen, setCatOpen] = useState(false);
   const [itemOpen, setItemOpen] = useState(false);
   const dispatch = useDispatch();
@@ -31,25 +31,27 @@ const List = (props) => {
     <ListContainer>
       <ListPanel color="#deddec">
         <h1>{props.list.name}</h1>
-        <Button onClick={() => dispatch(deleteList({ id: props.list._id }))}>
+        <Button
+          onClick={() => dispatch(deleteExpenseCard({ id: props.list._id }))}
+        >
           Delete List
         </Button>
         <br />
         {/* <h2>Shared: {`${props.list.shared}`}</h2> */}
-        <ListTable
+        <ExpenseTable
           categories={props.list.categories}
           expenseLog={props.list.expenseLog}
           currency={props.list.currency}
         />
         <br />
         <Button onClick={() => setCatOpen(true)}>+ category</Button>
-        <ListCategoryModal
+        <CategoryModal
           open={catOpen}
           closeHandler={() => setCatOpen(false)}
           id={props.list._id}
         />
         <Button onClick={() => setItemOpen(true)}>+ item</Button>
-        <AddExpenseModal
+        <ItemModal
           open={itemOpen}
           closeHandler={() => setItemOpen(false)}
           id={props.list._id}
@@ -60,4 +62,4 @@ const List = (props) => {
   );
 };
 
-export default List;
+export default ExpenseCard;

@@ -15,7 +15,7 @@ import { useDispatch } from "react-redux";
 
 import Button from "../UI/Button";
 
-import { addList } from "../../actions/listActions";
+import { addExpenseCard } from "../../actions/expensesActions";
 
 const currencies = [
   { value: "USD", label: "$" },
@@ -36,7 +36,7 @@ const FormModal = (props) => {
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
-    dispatch(addList(newList));
+    dispatch(addExpenseCard(newList));
     setOpen(false);
   };
 

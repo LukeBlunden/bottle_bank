@@ -25,7 +25,7 @@ const NavTitle = styled.h2`
 const LinksContainer = styled.div`
   grid-column: 1 / span 3;
   transition: max-height 0.3s ease-out;
-  max-height: ${(props) => (props.open ? "6em" : "0")};
+  max-height: ${(props) => (props.open ? "8em" : "0")};
   overflow: hidden;
 `;
 
@@ -55,6 +55,9 @@ const Navbar = (props) => {
         </StyledNavLink>
         <StyledNavLink to="/expenses" onClick={() => setOpen(false)}>
           Expenses
+        </StyledNavLink>
+        <StyledNavLink to="/income" onClick={() => setOpen(false)}>
+          Income
         </StyledNavLink>
       </LinksContainer>
     </NavContainer>

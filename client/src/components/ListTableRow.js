@@ -70,7 +70,7 @@ const ListTableRow = ({ name, expenseLog, currencySymbol }) => {
               </thead>
               <tbody>
                 {expenses.map((expense) => (
-                  <tr>
+                  <tr key={expense.selectedDate}>
                     <td>
                       {format(parseISO(expense.selectedDate), "dd/MM/yy")}
                     </td>

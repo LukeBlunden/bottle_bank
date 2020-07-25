@@ -28,7 +28,7 @@ export default function (state = initialState, action) {
     case DELETE_LIST:
       return {
         ...state,
-        lists: state.lists.filter((list) => list._id != action.payload._id),
+        lists: state.lists.filter((list) => list._id !== action.payload._id),
       };
     case ADD_EXPENSE:
     case ADD_CATEGORY:

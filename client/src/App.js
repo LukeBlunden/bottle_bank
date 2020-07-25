@@ -7,9 +7,10 @@ import { Provider } from "react-redux";
 import store from "./store";
 
 import { CssBaseline } from "@material-ui/core";
-import ListContainer from "./components/ListsContainer";
+import ExpensesContainer from "./components/ExpensesContainer";
 import Navbar from "./components/Navbar";
 import Dashboard from "./components/Dashboard";
+import Income from "./components/Income";
 
 function App() {
   return (
@@ -20,7 +21,10 @@ function App() {
           <Navbar />
           <Switch>
             <Route path="/expenses">
-              <ListContainer />
+              <ExpensesContainer />
+            </Route>
+            <Route path="/income">
+              <Income />
             </Route>
             <Route path="/">
               <Dashboard />

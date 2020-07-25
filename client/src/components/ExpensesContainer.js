@@ -5,7 +5,7 @@ import { getLists } from "../actions/listActions";
 import List from "./List";
 import FormModal from "./modals/FormModal";
 
-const ListTables = (props) => {
+const ExpensesContainer = (props) => {
   const dispatch = useDispatch();
   const { lists, loading } = useSelector((state) => state.lists);
 
@@ -24,4 +24,4 @@ const ListTables = (props) => {
   );
 };
 
-export default ListTables;
+export default ExpensesContainer;

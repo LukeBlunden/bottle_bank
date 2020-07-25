@@ -26,6 +26,15 @@ router.post("/", (req, res) => {
     .catch((err) => console.log(err));
 });
 
+// @route DELETE api/lists
+// @desc Delete a list
+// @access public
+router.delete("/", (req, res) => {
+  List.findByIdAndDelete(req.body.id)
+    .then((list) => res.json(list))
+    .catch((err) => console.log(err));
+});
+
 // @route POST api/lists/list
 // @desc Add an item to a list
 // @access public

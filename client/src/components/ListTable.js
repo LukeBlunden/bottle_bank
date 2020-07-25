@@ -1,13 +1,27 @@
 import React from "react";
-import {
-  Table,
-  TableContainer,
-  TableCell,
-  TableRow,
-  TableHead,
-  TableBody,
-} from "@material-ui/core";
+import styled from "styled-components";
 import ListTableRow from "./ListTableRow";
+
+const OuterTable = styled.table`
+  display: grid;
+  grid-template-columns: 2rem minmax(5rem, 100%) minmax(3.5rem, 1fr);
+  max-width: 100%;
+  /* padding: 1rem; */
+  text-align: left;
+
+  & > thead,
+  & > tbody {
+    display: contents;
+
+    & > tr {
+      display: contents;
+
+      /* & > *:last-child {
+        text-align: right;
+      } */
+    }
+  }
+`;
 
 const currencies = {
   USD: "$",
@@ -28,18 +42,18 @@ const ListTable = (props) => {
   ));
 
   return (
-    <TableContainer style={{ padding: "10px" }}>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell>Item</TableCell>
-            <TableCell align="right">Total</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>{tableRows}</TableBody>
-      </Table>
-    </TableContainer>
+    <div>
+      <OuterTable>
+        <thead>
+          <tr>
+            <th />
+            <th>Item</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>{tableRows}</tbody>
+      </OuterTable>
+    </div>
   );
 };
 

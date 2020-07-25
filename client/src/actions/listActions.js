@@ -5,6 +5,7 @@ import {
   LOADING_LISTS,
   ADD_CATEGORY,
   ADD_EXPENSE,
+  DELETE_LIST,
 } from "./types";
 
 export const getLists = () => (dispatch) => {
@@ -19,6 +20,13 @@ export const addList = (newList) => (dispatch) => {
   axios
     .post("/api/lists", newList)
     .then((res) => dispatch({ type: ADD_LIST, payload: res.data }))
+    .catch((err) => console.log(err));
+};
+
+export const deleteList = (listId) => (dispatch) => {
+  axios
+    .delete("/api/lists", { data: listId })
+    .then((res) => dispatch({ type: DELETE_LIST, payload: res.data }))
     .catch((err) => console.log(err));
 };
 

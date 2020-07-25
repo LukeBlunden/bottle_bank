@@ -4,6 +4,7 @@ import {
   LOADING_LISTS,
   ADD_CATEGORY,
   ADD_EXPENSE,
+  DELETE_LIST,
 } from "../actions/types";
 
 const initialState = {
@@ -23,6 +24,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         lists: [...state.lists, action.payload],
+      };
+    case DELETE_LIST:
+      return {
+        ...state,
+        lists: state.lists.filter((list) => list._id != action.payload._id),
       };
     case ADD_EXPENSE:
     case ADD_CATEGORY:

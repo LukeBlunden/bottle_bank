@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getLists } from "../actions/listActions";
 
 import List from "./List";
+import FormModal from "./modals/FormModal";
 
 const ListTables = (props) => {
   const dispatch = useDispatch();
@@ -14,6 +15,7 @@ const ListTables = (props) => {
 
   return (
     <React.Fragment>
+      <FormModal />
       {loading && <p>Loading...</p>}
       {lists.map((list) => (
         <List key={list._id} list={list} />

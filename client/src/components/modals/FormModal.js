@@ -10,9 +10,10 @@ import {
   Select,
   FormControlLabel,
   Switch,
-  Button,
 } from "@material-ui/core";
 import { useDispatch } from "react-redux";
+
+import Button from "../UI/Button";
 
 import { addList } from "../../actions/listActions";
 
@@ -41,9 +42,7 @@ const FormModal = (props) => {
 
   return (
     <React.Fragment>
-      <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
-        Add list
-      </Button>
+      <Button onClick={() => setOpen(true)}>Add list</Button>
       <Dialog open={open} onClose={() => setOpen(false)}>
         <form onSubmit={formSubmitHandler}>
           <DialogTitle>New list</DialogTitle>

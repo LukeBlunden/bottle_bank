@@ -1,4 +1,5 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 const path = require("path");
 const mongoose = require("mongoose");
 const config = require("config");
@@ -6,7 +7,8 @@ const config = require("config");
 const app = express();
 
 // Parses incoming requests with Json payloads
-app.use(express.json());
+// app.use(express.json());
+app.use(bodyParser.json());
 
 const db = config.get("mongoURI");
 

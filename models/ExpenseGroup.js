@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const ListSchema = new Schema({
+const ExpenseSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -18,10 +18,10 @@ const ListSchema = new Schema({
     type: Array,
     default: [],
   },
-  expenseLog: {
+  log: {
     type: Array,
     default: [],
   },
 });
 
-module.exports = List = mongoose.model("list", ListSchema);
+module.exports = ExpenseGroup = mongoose.model("expenseGroup", ExpenseSchema);

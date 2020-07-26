@@ -40,8 +40,8 @@ export default function (state = initialState, action) {
           if (expense.categories.length !== action.payload.categories.length) {
             expense.categories = action.payload.categories;
           }
-          if (expense.expenseLog.length !== action.payload.expenseLog.length) {
-            expense.expenseLog = action.payload.expenseLog;
+          if (expense.log.length !== action.payload.log.length) {
+            expense.log = action.payload.log;
           }
         }
         return expense;

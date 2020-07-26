@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getExpenses } from "../actions/expensesActions";
+import { getExpenses, addExpenseCard } from "../actions/expensesActions";
 
-import ExpenseCard from "./ExpenseCard";
+import Card from "./Card";
 import CardModal from "./modals/CardModal";
 
 const ExpensesContainer = (props) => {
@@ -15,10 +15,10 @@ const ExpensesContainer = (props) => {
 
   return (
     <React.Fragment>
-      <CardModal />
+      <CardModal dispatchMethod={addExpenseCard}>Add Expense Group</CardModal>
       {loading && <p>Loading...</p>}
       {expenses.map((expense) => (
-        <ExpenseCard key={expense._id} list={expense} />
+        <Card key={expense._id} list={expense} role="expense" />
       ))}
     </React.Fragment>
   );

@@ -24,6 +24,7 @@ mongoose
   .catch((err) => console.log("DB connection error: ", err));
 
 app.use("/api/expenses/", require("./routes/api/expenses"));
+app.use("/api/income/", require("./routes/api/income"));
 
 const port = process.env.PORT || 5000;
 

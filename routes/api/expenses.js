@@ -1,63 +1,66 @@
 const express = require("express");
 const router = express.Router();
 
-const List = require("../../models/List");
+const ExpenseGroup = require("../../models/ExpenseGroup");
 
-// @route GET api/lists
-// @desc Get all lists
+// @route GET api/expenses
+// @desc Get all expenses
 // @access public
 router.get("/", (req, res) => {
-  List.find().then((lists) => res.json(lists));
+  ExpenseGroup.find().then((expenses) => res.json(expenses));
 });
 
-// @route POST api/lists
-// @desc Create a list
+// @route POST api/expenses
+// @desc Create an expense group
 // @access public
 router.post("/", (req, res) => {
-  const newList = new List({
+  const newExpenseGroup = new ExpenseGroup({
     name: req.body.name,
     shared: req.body.shared,
     currency: req.body.currency,
   });
 
-  newList
+  newExpenseGroup
     .save()
-    .then((list) => res.json(list))
+    .then((expenseGroup) => res.json(expenseGroup))
     .catch((err) => console.log(err));
 });
 
-// @route DELETE api/lists
-// @desc Delete a list
+// @route DELETE api/expenses
+// @desc Delete an expense group
 // @access public
 router.delete("/", (req, res) => {
-  List.findByIdAndDelete(req.body.id)
-    .then((list) => res.json(list))
+  ExpenseGroup.findByIdAndDelete(req.body.id)
+    .then((expenseGroup) => res.json(expenseGroup))
     .catch((err) => console.log(err));
 });
 
-// @route POST api/lists/list
-// @desc Add an item to a list
+// @route POST api/expenses/category
+// @desc Add a category to an expense group
 // @access public
 router.post("/category", (req, res) => {
-  List.findByIdAndUpdate(
+  ExpenseGroup.findByIdAndUpdate(
     req.body.id,
     {
       $push: { categories: { name: req.body.name } },
     },
     { new: true }
-  ).then((list) => res.json(list));
+  ).then((expenseGroup) => res.json(expenseGroup));
 });
 
-router.post("/expense", (req, res) => {
+// @route POST api/expenses/expense
+// @desc Add an expense item to an expense category
+// @access public
+router.post("/item", (req, res) => {
   const { description, amount, category, selectedDate } = req.body;
-  List.findByIdAndUpdate(
+  ExpenseGroup.findByIdAndUpdate(
     req.body.id,
     {
-      $push: { expenseLog: { description, amount, category, selectedDate } },
+      $push: { log: { description, amount, category, selectedDate } },
     },
     { new: true }
   )
-    .then((list) => res.json(list))
+    .then((expenseGroup) => res.json(expenseGroup))
     .catch((err) => console.log(err));
 });
 

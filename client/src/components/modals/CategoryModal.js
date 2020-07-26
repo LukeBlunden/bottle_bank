@@ -2,19 +2,22 @@ import React, { useState } from "react";
 import { Dialog, DialogContent, TextField, Button } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { addExpenseCategory } from "../../actions/expensesActions";
+import { addIncomeCategory } from "../../actions/incomeActions";
 
-const CategoryModal = (props) => {
+const CategoryModal = ({ id, closeHandler, open, role }) => {
   const [name, setName] = useState("");
   const dispatch = useDispatch();
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
-    dispatch(addExpenseCategory({ name, id: props.id }));
-    props.closeHandler();
+    role === "expense"
+      ? dispatch(addExpenseCategory({ name, id }))
+      : dispatch(addIncomeCategory({ name, id }));
+    closeHandler();
   };
 
   return (
-    <Dialog open={props.open} onClose={props.closeHandler}>
+    <Dialog open={open} onClose={closeHandler}>
       <form onSubmit={formSubmitHandler}>
         <DialogContent>
           <TextField

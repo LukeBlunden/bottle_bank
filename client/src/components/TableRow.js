@@ -36,12 +36,12 @@ const InnerTable = styled.table`
   }
 `;
 
-const ExpenseTableRow = ({ name, expenseLog, currencySymbol }) => {
+const TableRow = ({ name, log, currencySymbol }) => {
   const [open, setOpen] = useState(false);
 
-  const expenses = expenseLog.filter((expense) => expense.category === name);
-  const total = expenses.reduce(
-    (acc, expense) => acc + parseFloat(expense.amount, 10),
+  const items = log.filter((item) => item.category === name);
+  const total = items.reduce(
+    (acc, item) => acc + parseFloat(item.amount, 10),
     0
   );
 
@@ -69,15 +69,13 @@ const ExpenseTableRow = ({ name, expenseLog, currencySymbol }) => {
                 </tr>
               </thead>
               <tbody>
-                {expenses.map((expense) => (
-                  <tr key={expense.selectedDate}>
-                    <td>
-                      {format(parseISO(expense.selectedDate), "dd/MM/yy")}
-                    </td>
-                    <td>{expense.description}</td>
+                {items.map((item) => (
+                  <tr key={item.selectedDate}>
+                    <td>{format(parseISO(item.selectedDate), "dd/MM/yy")}</td>
+                    <td>{item.description}</td>
                     <td>
                       {currencySymbol}
-                      {expense.amount}
+                      {item.amount}
                     </td>
                   </tr>
                 ))}
@@ -90,4 +88,4 @@ const ExpenseTableRow = ({ name, expenseLog, currencySymbol }) => {
   );
 };
 
-export default ExpenseTableRow;
+export default TableRow;

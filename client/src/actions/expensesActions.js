@@ -39,7 +39,7 @@ export const addExpenseCategory = (item) => (dispatch) => {
 
 export const addExpenseItem = (expense) => (dispatch) => {
   axios
-    .post("/api/expenses/expense", expense)
+    .post("/api/expenses/item", expense)
     .then((res) => dispatch({ type: ADD_EXPENSE_ITEM, payload: res.data }))
     .catch((err) => console.log(err));
 };

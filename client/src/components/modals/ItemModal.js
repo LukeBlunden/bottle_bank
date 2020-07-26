@@ -16,8 +16,9 @@ import {
 } from "@material-ui/pickers";
 import { useDispatch } from "react-redux";
 import { addExpenseItem } from "../../actions/expensesActions";
+import { addIncomeItem } from "../../actions/incomeActions";
 
-const ItemModal = (props) => {
+const ItemModal = ({ open, closeHandler, id, categories, role }) => {
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState(null);
   const [category, setCategory] = useState("");
@@ -27,20 +28,21 @@ const ItemModal = (props) => {
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
-    dispatch(
-      addExpenseItem({
-        description,
-        amount,
-        category,
-        selectedDate,
-        id: props.id,
-      })
-    );
-    props.closeHandler();
+    const newItem = {
+      description,
+      amount,
+      category,
+      selectedDate,
+      id,
+    };
+    role === "expense"
+      ? dispatch(addExpenseItem(newItem))
+      : dispatch(addIncomeItem(newItem));
+    closeHandler();
   };
 
   return (
-    <Dialog open={props.open} onClose={props.closeHandler}>
+    <Dialog open={open} onClose={closeHandler}>
       <form onSubmit={formSubmitHandler}>
         <DialogContent>
           <TextField
@@ -59,7 +61,7 @@ const ItemModal = (props) => {
               onChange={(e) => setCategory(e.target.value)}
               value={category}
             >
-              {props.categories.map((category) => (
+              {categories.map((category) => (
                 <MenuItem key={category.name} value={category.name}>
                   {category.name}
                 </MenuItem>

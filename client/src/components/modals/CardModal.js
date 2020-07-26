@@ -36,16 +36,16 @@ const FormModal = (props) => {
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
-    dispatch(addExpenseCard(newList));
+    dispatch(props.dispatchMethod(newList));
     setOpen(false);
   };
 
   return (
     <React.Fragment>
-      <Button onClick={() => setOpen(true)}>Add list</Button>
+      <Button onClick={() => setOpen(true)}>{props.children}</Button>
       <Dialog open={open} onClose={() => setOpen(false)}>
         <form onSubmit={formSubmitHandler}>
-          <DialogTitle>New list</DialogTitle>
+          <DialogTitle>New Group</DialogTitle>
           <DialogContent>
             <TextField
               label="List name"

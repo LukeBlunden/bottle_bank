@@ -1,10 +1,10 @@
 import {
   GET_EXPENSES,
-  ADD_EXPENSE_CARD,
+  ADD_EXPENSE_GROUP,
   LOADING_EXPENSES,
   ADD_EXPENSE_CATEGORY,
   ADD_EXPENSE_ITEM,
-  DELETE_EXPENSE_CARD,
+  DELETE_EXPENSE_GROUP,
 } from "../actions/types";
 
 const initialState = {
@@ -20,12 +20,12 @@ export default function (state = initialState, action) {
         expenses: action.payload,
         loading: false,
       };
-    case ADD_EXPENSE_CARD:
+    case ADD_EXPENSE_GROUP:
       return {
         ...state,
         expenses: [...state.expenses, action.payload],
       };
-    case DELETE_EXPENSE_CARD:
+    case DELETE_EXPENSE_GROUP:
       return {
         ...state,
         expenses: state.expenses.filter(

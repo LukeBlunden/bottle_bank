@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { isThisMonth } from "date-fns";
 import styled from "styled-components";
 import Theme from "../theme/Theme";
+import { useDispatch, useSelector } from "react-redux";
+import { getIncome } from "../actions/incomeActions";
+import { getExpenses } from "../actions/expensesActions";
 
 const GridContainer = styled.div`
   display: grid;
@@ -30,6 +34,48 @@ const InfoPanel = styled.div`
 `;
 
 const Dashboard = (props) => {
+  const [incomeTotal, setIncomeTotal] = useState(null);
+  const [expensesTotal, setExpensesTotal] = useState(null);
+
+  const dispatch = useDispatch();
+  const { income, loading: incomeLoading } = useSelector(
+    (state) => state.income
+  );
+  const { expenses, loading: expensesLoading } = useSelector(
+    (state) => state.expenses
+  );
+
+  useEffect(() => {
+    dispatch(getIncome());
+    dispatch(getExpenses());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!incomeLoading) {
+      const newTotal = income.reduce((acc, group) => {
+        for (let log of group.log) {
+          acc += parseFloat(log.amount, 10);
+        }
+        return acc;
+      }, 0);
+      setIncomeTotal(newTotal);
+    }
+  }, [incomeLoading, income]);
+
+  useEffect(() => {
+    if (!expensesLoading) {
+      const newTotal = expenses.reduce((acc, group) => {
+        for (let log of group.log) {
+          if (isThisMonth(new Date(log.selectedDate))) {
+            acc += parseFloat(log.amount, 10);
+          }
+        }
+        return acc;
+      }, 0);
+      setExpensesTotal(newTotal);
+    }
+  }, [expensesLoading, expenses]);
+
   return (
     <Theme>
       <React.Fragment>
@@ -42,11 +88,11 @@ const Dashboard = (props) => {
             </InfoPanel>
             <InfoPanel color="#f5c892">
               <p>Monthly Expenses</p>
-              <p>-$500.00</p>
+              <p>{expensesTotal ? `-$${expensesTotal.toFixed(2)}` : "..."}</p>
             </InfoPanel>
             <InfoPanel color="#b2f3da">
               <p>Monthly Income</p>
-              <p>+$1500.00</p>
+              <p>{incomeTotal ? `+$${incomeTotal.toFixed(2)}` : "..."}</p>
             </InfoPanel>
             <InfoPanel color="#deddec">
               <p>Initial Savings</p>

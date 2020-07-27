@@ -1,11 +1,11 @@
 import axios from "axios";
 import {
   GET_EXPENSES,
-  ADD_EXPENSE_CARD,
+  ADD_EXPENSE_GROUP,
   LOADING_EXPENSES,
   ADD_EXPENSE_CATEGORY,
   ADD_EXPENSE_ITEM,
-  DELETE_EXPENSE_CARD,
+  DELETE_EXPENSE_GROUP,
 } from "./types";
 
 export const getExpenses = () => (dispatch) => {
@@ -16,17 +16,17 @@ export const getExpenses = () => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const addExpenseCard = (newList) => (dispatch) => {
+export const addExpenseGroup = (newList) => (dispatch) => {
   axios
     .post("/api/expenses", newList)
-    .then((res) => dispatch({ type: ADD_EXPENSE_CARD, payload: res.data }))
+    .then((res) => dispatch({ type: ADD_EXPENSE_GROUP, payload: res.data }))
     .catch((err) => console.log(err));
 };
 
-export const deleteExpenseCard = (listId) => (dispatch) => {
+export const deleteExpenseGroup = (listId) => (dispatch) => {
   axios
     .delete("/api/expenses", { data: listId })
-    .then((res) => dispatch({ type: DELETE_EXPENSE_CARD, payload: res.data }))
+    .then((res) => dispatch({ type: DELETE_EXPENSE_GROUP, payload: res.data }))
     .catch((err) => console.log(err));
 };
 

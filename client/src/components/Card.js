@@ -6,7 +6,7 @@ import Table from "./Table";
 import Button from "./UI/Button";
 
 import { useDispatch } from "react-redux";
-import { deleteExpenseCard } from "../actions/expensesActions";
+import { deleteExpenseGroup } from "../actions/expensesActions";
 import { deleteIncomeGroup } from "../actions/incomeActions";
 
 const ListContainer = styled.div`
@@ -30,7 +30,7 @@ const Card = ({ list, role }) => {
 
   const deleteGroup = (id) => {
     role === "expense"
-      ? dispatch(deleteExpenseCard({ id }))
+      ? dispatch(deleteExpenseGroup({ id }))
       : dispatch(deleteIncomeGroup({ id }));
   };
 

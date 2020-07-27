@@ -15,8 +15,6 @@ import { useDispatch } from "react-redux";
 
 import Button from "../UI/Button";
 
-import { addExpenseCard } from "../../actions/expensesActions";
-
 const currencies = [
   { value: "USD", label: "$" },
   { value: "EUR", label: "€" },

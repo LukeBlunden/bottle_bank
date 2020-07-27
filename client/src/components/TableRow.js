@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { format, parseISO } from "date-fns";
+import { format, parseISO, isThisMonth } from "date-fns";
 import styled from "styled-components";
 import { KeyboardArrowUp, KeyboardArrowDown } from "@material-ui/icons";
 
@@ -39,7 +39,9 @@ const InnerTable = styled.table`
 const TableRow = ({ name, log, currencySymbol }) => {
   const [open, setOpen] = useState(false);
 
-  const items = log.filter((item) => item.category === name);
+  const items = log.filter(
+    (item) => item.category === name && isThisMonth(new Date(item.selectedDate))
+  );
   const total = items.reduce(
     (acc, item) => acc + parseFloat(item.amount, 10),
     0

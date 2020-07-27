@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
+const auth = require("../../middleware/auth");
+
 const ExpenseGroup = require("../../models/ExpenseGroup");
 
 // @route GET api/expenses
@@ -12,8 +14,8 @@ router.get("/", (req, res) => {
 
 // @route POST api/expenses
 // @desc Create an expense group
-// @access public
-router.post("/", (req, res) => {
+// @access private
+router.post("/", auth, (req, res) => {
   const newExpenseGroup = new ExpenseGroup({
     name: req.body.name,
     shared: req.body.shared,
@@ -28,8 +30,8 @@ router.post("/", (req, res) => {
 
 // @route DELETE api/expenses
 // @desc Delete an expense group
-// @access public
-router.delete("/", (req, res) => {
+// @access private
+router.delete("/", auth, (req, res) => {
   ExpenseGroup.findByIdAndDelete(req.body.id)
     .then((expenseGroup) => res.json(expenseGroup))
     .catch((err) => console.log(err));
@@ -37,8 +39,8 @@ router.delete("/", (req, res) => {
 
 // @route POST api/expenses/category
 // @desc Add a category to an expense group
-// @access public
-router.post("/category", (req, res) => {
+// @access private
+router.post("/category", auth, (req, res) => {
   ExpenseGroup.findByIdAndUpdate(
     req.body.id,
     {
@@ -50,8 +52,8 @@ router.post("/category", (req, res) => {
 
 // @route POST api/expenses/expense
 // @desc Add an expense item to an expense category
-// @access public
-router.post("/item", (req, res) => {
+// @access private
+router.post("/item", auth, (req, res) => {
   const { description, amount, category, selectedDate } = req.body;
   ExpenseGroup.findByIdAndUpdate(
     req.body.id,
@@ -65,12 +67,3 @@ router.post("/item", (req, res) => {
 });
 
 module.exports = router;
-
-const item = {
-  id: "xxx",
-  shared: false,
-  currency: "String",
-  items: [
-    { name: "name", transaction: [{ name: "name", amount: 0, date: Date() }] },
-  ],
-};

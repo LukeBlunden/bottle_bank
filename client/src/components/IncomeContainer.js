@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getIncome, addIncomeGroup } from "../actions/incomeActions";

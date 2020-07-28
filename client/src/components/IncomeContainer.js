@@ -9,9 +9,10 @@ import Card from "./Card";
 const IncomeContainer = (props) => {
   const dispatch = useDispatch();
   const { income, loading } = useSelector((state) => state.income);
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    dispatch(getIncome());
+    dispatch(getIncome(user._id));
   }, [dispatch]);
 
   return (

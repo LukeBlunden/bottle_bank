@@ -10,19 +10,19 @@ import {
 import { tokenConfig } from "./authActions";
 import { returnErrors } from "./errorActions";
 
-export const getIncome = () => (dispatch, getState) => {
+export const getIncome = (id) => (dispatch, getState) => {
   dispatch({ type: LOADING_INCOME });
   axios
-    .get("/api/income", tokenConfig(getState))
+    .get(`/api/income/${id}`, tokenConfig(getState))
     .then((res) => dispatch({ type: GET_INCOME, payload: res.data }))
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
     );
 };
 
-export const addIncomeGroup = (newIncome) => (dispatch, getState) => {
+export const addIncomeGroup = (newIncome, id) => (dispatch, getState) => {
   axios
-    .post("/api/income", newIncome, tokenConfig(getState))
+    .post("/api/income", { newIncome, id }, tokenConfig(getState))
     .then((res) => dispatch({ type: ADD_INCOME_GROUP, payload: res.data }))
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))

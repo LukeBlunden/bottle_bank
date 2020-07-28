@@ -22,6 +22,10 @@ const ExpenseSchema = new Schema({
     type: Array,
     default: [],
   },
+  users: {
+    type: Array,
+    default: [],
+  },
 });
 
 module.exports = ExpenseGroup = mongoose.model("expenseGroup", ExpenseSchema);

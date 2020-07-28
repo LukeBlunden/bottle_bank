@@ -72,7 +72,7 @@ const Navbar = (props) => {
   const guestLinks = (
     <React.Fragment>
       <StyledLink
-        href="#"
+        to="#"
         onClick={() => {
           setOpen(false);
           setRegOpen(true);
@@ -88,7 +88,7 @@ const Navbar = (props) => {
         }}
       />
       <StyledLink
-        href="#"
+        to="#"
         onClick={() => {
           setOpen(false);
           setLoginOpen(true);
@@ -118,7 +118,7 @@ const Navbar = (props) => {
         Income
       </StyledNavLink>
       <StyledLink
-        exact
+        // exact
         to="/"
         onClick={() => {
           setOpen(false);

@@ -10,19 +10,19 @@ import {
 import { tokenConfig } from "./authActions";
 import { returnErrors } from "./errorActions";
 
-export const getExpenses = () => (dispatch, getState) => {
+export const getExpenses = (id) => (dispatch, getState) => {
   dispatch({ type: LOADING_EXPENSES });
   axios
-    .get("/api/expenses", tokenConfig(getState))
+    .get(`/api/expenses/${id}`, tokenConfig(getState))
     .then((res) => dispatch({ type: GET_EXPENSES, payload: res.data }))
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))
     );
 };
 
-export const addExpenseGroup = (newList) => (dispatch, getState) => {
+export const addExpenseGroup = (newExpense, id) => (dispatch, getState) => {
   axios
-    .post("/api/expenses", newList, tokenConfig(getState))
+    .post("/api/expenses", { newExpense, id }, tokenConfig(getState))
     .then((res) => dispatch({ type: ADD_EXPENSE_GROUP, payload: res.data }))
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))

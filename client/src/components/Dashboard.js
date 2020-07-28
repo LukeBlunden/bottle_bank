@@ -44,10 +44,11 @@ const Dashboard = (props) => {
   const { expenses, loading: expensesLoading } = useSelector(
     (state) => state.expenses
   );
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    dispatch(getIncome());
-    dispatch(getExpenses());
+    dispatch(getIncome(user._id));
+    dispatch(getExpenses(user._id));
   }, [dispatch]);
 
   useEffect(() => {

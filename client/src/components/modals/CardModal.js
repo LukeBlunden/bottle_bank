@@ -11,7 +11,7 @@ import {
   FormControlLabel,
   Switch,
 } from "@material-ui/core";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Button from "../UI/Button";
 
@@ -30,11 +30,13 @@ const FormModal = (props) => {
     shared: false,
   });
   const [open, setOpen] = useState(false);
+
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
-    dispatch(props.dispatchMethod(newList));
+    dispatch(props.dispatchMethod(newList, user._id));
     setOpen(false);
   };
 

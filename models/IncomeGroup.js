@@ -22,6 +22,10 @@ const IncomeSchema = new Schema({
     type: Array,
     default: [],
   },
+  users: {
+    type: Array,
+    default: [],
+  },
 });
 
 module.exports = IncomeGroup = mongoose.model("incomeGroup", IncomeSchema);

@@ -8,9 +8,10 @@ import CardModal from "./modals/CardModal";
 const ExpensesContainer = (props) => {
   const dispatch = useDispatch();
   const { expenses, loading } = useSelector((state) => state.expenses);
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    dispatch(getExpenses());
+    dispatch(getExpenses(user._id));
   }, [dispatch]);
 
   return (

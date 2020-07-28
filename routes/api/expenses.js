@@ -8,8 +8,9 @@ const ExpenseGroup = require("../../models/ExpenseGroup");
 // @route GET api/expenses
 // @desc Get all expenses
 // @access private
-router.get("/", auth, (req, res) => {
-  ExpenseGroup.find()
+router.get("/:id", auth, (req, res) => {
+  // ExpenseGroup.find().where("users")
+  ExpenseGroup.find({ users: req.params.id })
     .then((expenses) => res.json(expenses))
     .catch((err) => res.status(500).json({ msg: "Internal Server Error" }));
 });
@@ -18,10 +19,12 @@ router.get("/", auth, (req, res) => {
 // @desc Create an expense group
 // @access private
 router.post("/", auth, (req, res) => {
+  // console.log(req.body);
   const newExpenseGroup = new ExpenseGroup({
-    name: req.body.name,
-    shared: req.body.shared,
-    currency: req.body.currency,
+    name: req.body.newExpense.name,
+    currency: req.body.newExpense.currency,
+    shared: req.body.newExpense.shared,
+    users: [req.body.id],
   });
 
   newExpenseGroup

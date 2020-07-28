@@ -7,39 +7,51 @@ import {
   ADD_EXPENSE_ITEM,
   DELETE_EXPENSE_GROUP,
 } from "./types";
+import { tokenConfig } from "./authActions";
+import { returnErrors } from "./errorActions";
 
-export const getExpenses = () => (dispatch) => {
+export const getExpenses = () => (dispatch, getState) => {
   dispatch({ type: LOADING_EXPENSES });
   axios
-    .get("/api/expenses")
+    .get("/api/expenses", tokenConfig(getState))
     .then((res) => dispatch({ type: GET_EXPENSES, payload: res.data }))
-    .catch((err) => console.log(err));
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
 };
 
-export const addExpenseGroup = (newList) => (dispatch) => {
+export const addExpenseGroup = (newList) => (dispatch, getState) => {
   axios
-    .post("/api/expenses", newList)
+    .post("/api/expenses", newList, tokenConfig(getState))
     .then((res) => dispatch({ type: ADD_EXPENSE_GROUP, payload: res.data }))
-    .catch((err) => console.log(err));
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
 };
 
-export const deleteExpenseGroup = (listId) => (dispatch) => {
+export const deleteExpenseGroup = (listId) => (dispatch, getState) => {
   axios
-    .delete("/api/expenses", { data: listId })
+    .delete("/api/expenses", { data: listId }, tokenConfig(getState))
     .then((res) => dispatch({ type: DELETE_EXPENSE_GROUP, payload: res.data }))
-    .catch((err) => console.log(err));
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
 };
 
-export const addExpenseCategory = (item) => (dispatch) => {
+export const addExpenseCategory = (item) => (dispatch, getState) => {
   axios
-    .post("/api/expenses/category", item)
+    .post("/api/expenses/category", item, tokenConfig(getState))
     .then((res) => dispatch({ type: ADD_EXPENSE_CATEGORY, payload: res.data }))
-    .catch((err) => console.log(err));
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
 };
 
-export const addExpenseItem = (expense) => (dispatch) => {
+export const addExpenseItem = (expense) => (dispatch, getState) => {
   axios
-    .post("/api/expenses/item", expense)
+    .post("/api/expenses/item", expense, tokenConfig(getState))
     .then((res) => dispatch({ type: ADD_EXPENSE_ITEM, payload: res.data }))
-    .catch((err) => console.log(err));
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
 };

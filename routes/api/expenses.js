@@ -7,9 +7,11 @@ const ExpenseGroup = require("../../models/ExpenseGroup");
 
 // @route GET api/expenses
 // @desc Get all expenses
-// @access public
-router.get("/", (req, res) => {
-  ExpenseGroup.find().then((expenses) => res.json(expenses));
+// @access private
+router.get("/", auth, (req, res) => {
+  ExpenseGroup.find()
+    .then((expenses) => res.json(expenses))
+    .catch((err) => res.status(500).json({ msg: "Internal Server Error" }));
 });
 
 // @route POST api/expenses
@@ -25,7 +27,7 @@ router.post("/", auth, (req, res) => {
   newExpenseGroup
     .save()
     .then((expenseGroup) => res.json(expenseGroup))
-    .catch((err) => console.log(err));
+    .catch((err) => res.status(500).json({ msg: "Internal Server Error" }));
 });
 
 // @route DELETE api/expenses
@@ -34,7 +36,7 @@ router.post("/", auth, (req, res) => {
 router.delete("/", auth, (req, res) => {
   ExpenseGroup.findByIdAndDelete(req.body.id)
     .then((expenseGroup) => res.json(expenseGroup))
-    .catch((err) => console.log(err));
+    .catch((err) => res.status(500).json({ msg: "Internal Server Error" }));
 });
 
 // @route POST api/expenses/category
@@ -47,7 +49,9 @@ router.post("/category", auth, (req, res) => {
       $push: { categories: { name: req.body.name } },
     },
     { new: true }
-  ).then((expenseGroup) => res.json(expenseGroup));
+  )
+    .then((expenseGroup) => res.json(expenseGroup))
+    .catch((err) => res.status(500).json({ msg: "Internal Server Error" }));
 });
 
 // @route POST api/expenses/expense
@@ -63,7 +67,7 @@ router.post("/item", auth, (req, res) => {
     { new: true }
   )
     .then((expenseGroup) => res.json(expenseGroup))
-    .catch((err) => console.log(err));
+    .catch((err) => res.status(500).json({ msg: "Internal Server Error" }));
 });
 
 module.exports = router;

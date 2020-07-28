@@ -55,3 +55,9 @@ export const addExpenseItem = (expense) => (dispatch, getState) => {
       dispatch(returnErrors(err.response.data, err.response.status))
     );
 };
+
+export const addSharedUser = (data) => (dispatch, getState) => {
+  axios
+    .post("/api/expenses/user", data, tokenConfig(getState))
+    .then((res) => console.log(res));
+};

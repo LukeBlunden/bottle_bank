@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import CategoryModal from "./modals/CategoryModal";
 import ItemModal from "./modals/ItemModal";
+import AddUserModal from "./modals/AddUserModal";
 import Table from "./Table";
 import Button from "./UI/Button";
 
@@ -26,6 +27,7 @@ const ListPanel = styled.div`
 const Card = ({ list, role }) => {
   const [catOpen, setCatOpen] = useState(false);
   const [itemOpen, setItemOpen] = useState(false);
+  const [userOpen, setUserOpen] = useState(false);
   const dispatch = useDispatch();
 
   const deleteGroup = (id) => {
@@ -62,6 +64,16 @@ const Card = ({ list, role }) => {
           categories={list.categories}
           role={role}
         />
+        {list.shared && (
+          <React.Fragment>
+            <Button onClick={() => setUserOpen(true)}>+ user</Button>
+            <AddUserModal
+              open={userOpen}
+              id={list._id}
+              closeHandler={() => setUserOpen(false)}
+            />
+          </React.Fragment>
+        )}
       </ListPanel>
     </ListContainer>
   );

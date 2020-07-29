@@ -1,3 +1,29 @@
+:root {
+  --col-main-bg: #efece5;
+  --col-dark-bg: #f1d6a4;
+  --col-darker-bg: #eac278;
+  --col-darkest-bg: #e3ae4c;
+
+  --col-light-grey: #b8bbbc;
+  --col-med-light-grey: #888e91;
+  --col-med-grey: #6b7377;
+  --col-med-dark-grey: #4e565a;
+  --col-dark-grey: #33393c;
+
+  --col-main-primary: #f4413d;
+
+  --col-main-neg: #fc7629;
+
+  --col-attention: #fbca00;
+
+  --col-main-pos: #7cbb82;
+
+  --border-primary: 3px;
+
+  --border-radius-card: 12px;
+  --border-radius-card-small: 9px;
+}
+
 *,
 *::before,
 *::after {
@@ -8,5 +34,8 @@
 
 .App {
   text-align: center;
-  background-color: #fefffe;
+  /* background-color: #fefffe; */
+  background-color: #efece5;
+  min-height: 100vh;
+  overflow: hidden;
 }

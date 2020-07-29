@@ -27,7 +27,7 @@ function App() {
   return (
     // <Provider store={store}>
     <BrowserRouter>
-      <CssBaseline />
+      {/* <CssBaseline /> */}
       <div className="App">
         <Navbar />
         <Switch>

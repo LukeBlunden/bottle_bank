@@ -10,13 +10,12 @@ const OpenTable = styled.div`
 const InnerTable = styled.table`
   display: grid;
   grid-template-columns:
-    minmax(4.5rem, 1fr)
+    minmax(3rem, 1fr)
     minmax(5rem, 100%)
     minmax(3.5rem, 1fr);
+  align-items: stretch;
   width: 100%;
-  padding-left: 2rem;
   text-align: left;
-  /* background-color: #f5c892; */
 
   & > thead,
   & > tbody {
@@ -26,12 +25,14 @@ const InnerTable = styled.table`
       display: contents;
 
       & > * {
-        padding: 0.4rem 0;
+        padding: 3px 0;
       }
 
-      /* & > *:last-child {
-        text-align: right;
-      } */
+      & > td.date {
+        font-size: 0.8rem;
+        line-height: 1.4rem;
+        text-align: center;
+      }
     }
   }
 `;
@@ -49,31 +50,34 @@ const TableRow = ({ name, log, currencySymbol }) => {
 
   return (
     <React.Fragment>
-      <tr>
-        <td onClick={() => setOpen(!open)}>
-          {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
-        </td>
-        <td>{name}</td>
-        <td>
+      <tr className="head">
+        <th onClick={() => setOpen(!open)} className="headcell arrow">
+          {/* {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />} */}
+          {open ? "⯅" : "⯆"}
+        </th>
+        <th className="headcell">{name}</th>
+        <th className="headcell">
           {currencySymbol}
           {total}
-        </td>
+        </th>
       </tr>
       <tr>
         <td style={{ gridColumn: "1 / span 3" }}>
           <OpenTable open={open}>
             <InnerTable>
-              <thead>
+              {/* <thead>
                 <tr>
                   <th>Date</th>
                   <th>Description</th>
                   <th>Amount</th>
                 </tr>
-              </thead>
+              </thead> */}
               <tbody>
                 {items.map((item) => (
                   <tr key={item.selectedDate}>
-                    <td>{format(parseISO(item.selectedDate), "dd/MM/yy")}</td>
+                    <td className="date">
+                      {format(parseISO(item.selectedDate), "dd/MM")}
+                    </td>
                     <td>{item.description}</td>
                     <td>
                       {currencySymbol}

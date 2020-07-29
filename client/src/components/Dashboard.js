@@ -15,9 +15,10 @@ const StackedCard = styled.div`
   display: flex;
   flex-direction: column;
   margin: 20px 20px 10px 20px;
-  padding: 10px;
+  padding: 5px;
   border-radius: 15px;
-  background-color: #2f2d52;
+  background-color: var(--col-dark-grey);
+  font-weight: bold;
 `;
 
 const InfoPanel = styled.div`
@@ -26,10 +27,17 @@ const InfoPanel = styled.div`
   background-color: ${(props) => props.color};
   display: flex;
   justify-content: space-between;
-  border-radius: 10px;
+
+  &:first-child {
+    border-radius: 10px 10px 0 0;
+  }
+
+  &:last-child {
+    border-radius: 0 0 10px 10px;
+  }
 
   &:not(:last-child) {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
   }
 `;
 
@@ -83,30 +91,30 @@ const Dashboard = (props) => {
         <h1>Dashboard</h1>
         <GridContainer>
           <StackedCard>
-            <InfoPanel color="#deddec">
+            <InfoPanel color="var(--col-dark-bg)">
               <p>Current Savings</p>
               <p>$2000.00</p>
             </InfoPanel>
-            <InfoPanel color="#f5c892">
+            <InfoPanel color="var(--col-main-neg)">
               <p>Monthly Expenses</p>
               <p>{expensesTotal ? `-$${expensesTotal.toFixed(2)}` : "..."}</p>
             </InfoPanel>
-            <InfoPanel color="#b2f3da">
+            <InfoPanel color="var(--col-main-pos)">
               <p>Monthly Income</p>
               <p>{incomeTotal ? `+$${incomeTotal.toFixed(2)}` : "..."}</p>
             </InfoPanel>
-            <InfoPanel color="#deddec">
+            <InfoPanel color="var(--col-dark-bg)">
               <p>Initial Savings</p>
               <p>$1000.00</p>
             </InfoPanel>
           </StackedCard>
 
           <StackedCard>
-            <InfoPanel color="#b2f3da">
+            <InfoPanel color="var(--col-main-pos)">
               <p>Monthly Performance</p>
               <p>+10%</p>
             </InfoPanel>
-            <InfoPanel color="#b2f3da">
+            <InfoPanel color="var(--col-main-pos)">
               <p>Annual Performance</p>
               <p>+50%</p>
             </InfoPanel>

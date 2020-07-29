@@ -36,8 +36,9 @@ router.post("/", auth, (req, res) => {
 // @route DELETE api/expenses
 // @desc Delete an expense group
 // @access private
-router.delete("/", auth, (req, res) => {
-  ExpenseGroup.findByIdAndDelete(req.body.id)
+router.delete("/:id", auth, (req, res) => {
+  console.log(req.params.id);
+  ExpenseGroup.findByIdAndDelete(req.params.id)
     .then((expenseGroup) => res.json(expenseGroup))
     .catch((err) => res.status(500).json({ msg: "Internal Server Error" }));
 });

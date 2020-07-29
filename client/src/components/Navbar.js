@@ -13,11 +13,13 @@ import LoginModal from "./modals/LoginModal";
 const NavContainer = styled.nav`
   display: grid;
   grid-template-columns: 3rem auto 2rem;
-  color: white;
+  color: #33393c;
   padding: 0.5rem;
-  background-color: #2f2d52;
+  /* background-color: #2f2d52; */
+  background-color: var(--col-main-primary);
   margin-bottom: 1rem;
   align-items: center;
+  border-bottom: var(--border-primary) solid var(--col-dark-grey);
 `;
 
 const NavLogo = styled.img`

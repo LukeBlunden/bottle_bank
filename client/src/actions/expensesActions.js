@@ -29,9 +29,9 @@ export const addExpenseGroup = (newExpense, id) => (dispatch, getState) => {
     );
 };
 
-export const deleteExpenseGroup = (listId) => (dispatch, getState) => {
+export const deleteExpenseGroup = (id) => (dispatch, getState) => {
   axios
-    .delete("/api/expenses", { data: listId }, tokenConfig(getState))
+    .delete(`/api/expenses/${id}`, tokenConfig(getState))
     .then((res) => dispatch({ type: DELETE_EXPENSE_GROUP, payload: res.data }))
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))

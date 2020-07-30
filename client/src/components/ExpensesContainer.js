@@ -11,7 +11,9 @@ const ExpensesContainer = (props) => {
   const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    dispatch(getExpenses(user._id));
+    if (expenses.length === 0) {
+      dispatch(getExpenses(user._id));
+    }
   }, [dispatch]);
 
   return (

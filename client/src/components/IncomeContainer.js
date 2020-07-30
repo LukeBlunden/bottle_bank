@@ -12,7 +12,9 @@ const IncomeContainer = (props) => {
   const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    dispatch(getIncome(user._id));
+    if (income.length === 0) {
+      dispatch(getIncome(user._id));
+    }
   }, [dispatch]);
 
   return (

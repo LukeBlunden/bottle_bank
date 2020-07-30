@@ -55,8 +55,12 @@ const Dashboard = (props) => {
   const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    dispatch(getIncome(user._id));
-    dispatch(getExpenses(user._id));
+    if (income.length === 0) {
+      dispatch(getIncome(user._id));
+    }
+    if (expenses.length === 0) {
+      dispatch(getExpenses(user._id));
+    }
   }, [dispatch]);
 
   useEffect(() => {

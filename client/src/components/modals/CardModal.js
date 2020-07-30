@@ -36,7 +36,7 @@ const FormModal = (props) => {
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
-    dispatch(props.dispatchMethod(newList, user._id));
+    dispatch(props.dispatchMethod(newList, { id: user._id, name: user.name }));
     setOpen(false);
   };
 

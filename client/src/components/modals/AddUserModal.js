@@ -11,7 +11,7 @@ const CategoryModal = ({ id, closeHandler, open }) => {
   const formSubmitHandler = (e) => {
     e.preventDefault();
     dispatch(addSharedUser({ email, id }));
-    // closeHandler();
+    closeHandler();
   };
 
   return (

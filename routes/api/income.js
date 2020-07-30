@@ -9,7 +9,7 @@ const IncomeGroup = require("../../models/IncomeGroup");
 // @desc Get all income
 // @access private
 router.get("/:id", auth, (req, res) => {
-  IncomeGroup.find({ users: req.params.id })
+  IncomeGroup.find({ "users.id": req.params.id })
     .then((income) => res.json(income))
     .catch((err) => res.status(500).json({ msg: "Internal Server Error" }));
 });
@@ -22,7 +22,7 @@ router.post("/", auth, (req, res) => {
     name: req.body.newIncome.name,
     shared: req.body.newIncome.shared,
     currency: req.body.newIncome.currency,
-    users: [req.body.id],
+    users: [req.body.user],
   });
 
   newIncomeGroup

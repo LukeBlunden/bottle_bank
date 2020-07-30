@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { format } from "date-fns";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Calendar from "react-calendar";
-
-import Modal from "../Modal";
 
 import { addExpenseItem } from "../../../actions/expensesActions";
 import { addIncomeItem } from "../../../actions/incomeActions";
@@ -37,7 +35,9 @@ const AddItem = ({ hide, id, categories, role }) => {
   const [category, setCategory] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [calendarOpen, setCalendarOpen] = useState(false);
+
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
@@ -61,6 +61,7 @@ const AddItem = ({ hide, id, categories, role }) => {
 
   return (
     <form onSubmit={formSubmitHandler}>
+      <p>{user.name.replace(/ .*/, "")}</p>
       <input
         type="text"
         placeholder="Description"

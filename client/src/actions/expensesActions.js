@@ -20,9 +20,9 @@ export const getExpenses = (id) => (dispatch, getState) => {
     );
 };
 
-export const addExpenseGroup = (newExpense, id) => (dispatch, getState) => {
+export const addExpenseGroup = (newExpense, user) => (dispatch, getState) => {
   axios
-    .post("/api/expenses", { newExpense, id }, tokenConfig(getState))
+    .post("/api/expenses", { newExpense, user }, tokenConfig(getState))
     .then((res) => dispatch({ type: ADD_EXPENSE_GROUP, payload: res.data }))
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))

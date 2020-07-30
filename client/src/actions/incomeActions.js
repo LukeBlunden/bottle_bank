@@ -20,9 +20,9 @@ export const getIncome = (id) => (dispatch, getState) => {
     );
 };
 
-export const addIncomeGroup = (newIncome, id) => (dispatch, getState) => {
+export const addIncomeGroup = (newIncome, user) => (dispatch, getState) => {
   axios
-    .post("/api/income", { newIncome, id }, tokenConfig(getState))
+    .post("/api/income", { newIncome, user }, tokenConfig(getState))
     .then((res) => dispatch({ type: ADD_INCOME_GROUP, payload: res.data }))
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))

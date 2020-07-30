@@ -10,7 +10,7 @@ const User = require("../../models/User");
 // @desc Get all expenses
 // @access private
 router.get("/:id", auth, (req, res) => {
-  ExpenseGroup.find({ users: req.params.id })
+  ExpenseGroup.find({ "users.id": req.params.id })
     .then((expenses) => res.json(expenses))
     .catch((err) => res.status(500).json({ msg: "Internal Server Error" }));
 });
@@ -24,7 +24,7 @@ router.post("/", auth, (req, res) => {
     name: req.body.newExpense.name,
     currency: req.body.newExpense.currency,
     shared: req.body.newExpense.shared,
-    users: [req.body.id],
+    users: [req.body.user],
   });
 
   newExpenseGroup
@@ -76,15 +76,15 @@ router.post("/item", auth, (req, res) => {
 
 router.post("/user", auth, (req, res) => {
   User.findOne({ email: req.body.email })
-    .then((res) =>
-      ExpenseGroup.findByIdAndUpdate(
-        req.body.id,
-        {
-          $push: { users: res._id.toString() },
-        },
-        { new: true }
-      )
-    )
+    .then((res) => {
+      const addUser = { id: res._id.toString(), name: res.name };
+      ExpenseGroup.findOneAndUpdate(
+        { _id: req.body.id },
+        { $push: { users: addUser } },
+        { new: true },
+        (err, res) => (err ? console.log(err) : console.log(res))
+      );
+    })
     .catch((err) => res.status(400).json({ msg: "User not found" }));
 });
 

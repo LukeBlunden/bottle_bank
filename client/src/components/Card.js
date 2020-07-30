@@ -127,6 +127,7 @@ const Card = ({ list, role }) => {
             id={list._id}
             hide={() => setItemOpen(false)}
             categories={list.categories}
+            users={list.users}
           />
         </Modal>
         {/* <ItemModal

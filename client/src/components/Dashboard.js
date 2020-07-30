@@ -15,7 +15,7 @@ const StackedCard = styled.div`
   display: flex;
   flex-direction: column;
   margin: 20px 20px 10px 20px;
-  padding: 5px;
+  padding: var(--border-primary);
   border-radius: 15px;
   background-color: var(--col-dark-grey);
   font-weight: bold;
@@ -29,15 +29,15 @@ const InfoPanel = styled.div`
   justify-content: space-between;
 
   &:first-child {
-    border-radius: 10px 10px 0 0;
+    border-radius: var(--border-radius-card) var(--border-radius-card) 0 0;
   }
 
   &:last-child {
-    border-radius: 0 0 10px 10px;
+    border-radius: 0 0 var(--border-radius-card) var(--border-radius-card);
   }
 
   &:not(:last-child) {
-    margin-bottom: 5px;
+    margin-bottom: var(--border-primary);
   }
 `;
 

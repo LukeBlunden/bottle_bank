@@ -1,14 +1,24 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { format } from "date-fns";
-// import DateFnsUtils from "@date-io/date-fns";
 import { useDispatch } from "react-redux";
 import Calendar from "react-calendar";
+
+import Modal from "../Modal";
+
 import { addExpenseItem } from "../../../actions/expensesActions";
 import { addIncomeItem } from "../../../actions/incomeActions";
 
+const DatePickerPanel = styled.div`
+  display: flex;
+`;
+
 const CalendarContainer = styled.div`
-  & > .calendar {
+  padding: ${(props) => (props.open ? "10px" : "0")};
+  overflow: hidden;
+
+  & .calendar {
+    max-height: ${(props) => (props.open ? "12rem" : "0")};
     & button {
       background-color: white;
       border: none;
@@ -21,12 +31,12 @@ const CalendarContainer = styled.div`
   }
 `;
 
-const AddItem = ({ open, closeHandler, id, categories, role }) => {
+const AddItem = ({ hide, id, categories, role }) => {
   const [description, setDescription] = useState("");
-  const [amount, setAmount] = useState(null);
+  const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
-
+  const [calendarOpen, setCalendarOpen] = useState(false);
   const dispatch = useDispatch();
 
   const formSubmitHandler = (e) => {
@@ -41,11 +51,16 @@ const AddItem = ({ open, closeHandler, id, categories, role }) => {
     role === "expense"
       ? dispatch(addExpenseItem(newItem))
       : dispatch(addIncomeItem(newItem));
-    closeHandler();
+    hide();
+    setDescription("");
+    setAmount("");
+    setCategory("");
+    setSelectedDate(new Date());
+    setCalendarOpen(false);
   };
 
   return (
-    <form>
+    <form onSubmit={formSubmitHandler}>
       <input
         type="text"
         placeholder="Description"
@@ -67,14 +82,22 @@ const AddItem = ({ open, closeHandler, id, categories, role }) => {
         ))}
       </select>
       <input
-        type="date"
-        name="expense-date"
-        id="date-select"
-        value={selectedDate}
-        onChange={(date) => setSelectedDate(date)}
+        type="number"
+        name="amount"
+        id="amount-select"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
       />
-      <CalendarContainer>
-        <Calendar className="calendar" />
+      <DatePickerPanel onClick={() => setCalendarOpen(!calendarOpen)}>
+        <p>{format(selectedDate, "dd/MM/yy")}</p>
+        <p>📅</p>
+      </DatePickerPanel>
+      <CalendarContainer open={calendarOpen}>
+        <Calendar
+          className="calendar"
+          onChange={(date) => setSelectedDate(date)}
+          value={selectedDate}
+        />
       </CalendarContainer>
       <button type="submit">Submit Item</button>
     </form>

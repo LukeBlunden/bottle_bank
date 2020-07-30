@@ -57,12 +57,6 @@ const ModalContainer = styled.div`
 `;
 
 const Modal = ({ open, hide, children }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  function toggle() {
-    setIsOpen(!isOpen);
-  }
-
   return (
     <React.Fragment>
       <ModalBackdrop open={open} onClick={hide} />

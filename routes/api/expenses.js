@@ -62,11 +62,11 @@ router.post("/category", auth, (req, res) => {
 // @desc Add an expense item to an expense category
 // @access private
 router.post("/item", auth, (req, res) => {
-  const { description, amount, category, selectedDate } = req.body;
+  const { description, amount, category, payer, selectedDate } = req.body;
   ExpenseGroup.findByIdAndUpdate(
     req.body.id,
     {
-      $push: { log: { description, amount, category, selectedDate } },
+      $push: { log: { description, amount, category, payer, selectedDate } },
     },
     { new: true }
   )

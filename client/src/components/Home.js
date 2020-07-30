@@ -7,7 +7,7 @@ const Home = (props) => {
 
   return (
     <div>
-      <h1>Hello {isAuthenticated ? user.name : "Guest"}</h1>
+      <h1>Hello {isAuthenticated ? user.name.replace(/ .*/, "") : "Guest"}</h1>
     </div>
   );
 };

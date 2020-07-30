@@ -29,15 +29,16 @@ const CalendarContainer = styled.div`
   }
 `;
 
-const AddItem = ({ hide, id, categories, role }) => {
+const AddItem = ({ hide, id, categories, role, users }) => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
+  const [payer, setPayer] = useState(user._id);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [calendarOpen, setCalendarOpen] = useState(false);
-
-  const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
@@ -45,6 +46,7 @@ const AddItem = ({ hide, id, categories, role }) => {
       description,
       amount,
       category,
+      payer,
       selectedDate,
       id,
     };
@@ -61,7 +63,6 @@ const AddItem = ({ hide, id, categories, role }) => {
 
   return (
     <form onSubmit={formSubmitHandler}>
-      <p>{user.name.replace(/ .*/, "")}</p>
       <input
         type="text"
         placeholder="Description"
@@ -79,6 +80,19 @@ const AddItem = ({ hide, id, categories, role }) => {
         {categories.map((category) => (
           <option key={category.name} value={category.name}>
             {category.name}
+          </option>
+        ))}
+      </select>
+      <select
+        name="payer"
+        id="payer-select"
+        value={payer}
+        onChange={(e) => setPayer(e.target.value)}
+        required
+      >
+        {users.map((user) => (
+          <option key={user.id} value={user.id}>
+            {user.name.replace(/ .*/, "")}
           </option>
         ))}
       </select>

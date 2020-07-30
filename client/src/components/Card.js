@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import CategoryModal from "./modals/CategoryModal";
+import { isThisMonth } from "date-fns";
+import { useSelector } from "react-redux";
+
 import AddCategory from "./modals/content/AddCategory";
 import AddItem from "./modals/content/AddItem";
-import ItemModal from "./modals/ItemModal";
 import AddUserModal from "./modals/AddUserModal";
 import Modal from "./modals/Modal";
 import Table from "./Table";
@@ -15,16 +16,46 @@ import { deleteIncomeGroup } from "../actions/incomeActions";
 
 const ListContainer = styled.div`
   margin: 20px 20px 10px 20px;
-  padding: var(--border-primary);
+  border: var(--border-primary) solid var(--col-dark-grey);
   border-radius: 15px;
   background-color: var(--col-dark-grey);
 `;
 
 const ListPanel = styled.div`
   width: 100%;
-  /* padding: 10px; */
   background-color: ${(props) => props.color};
   border-radius: var(--border-radius-card);
+`;
+
+const HeadingGroup = styled.div`
+  width: 100%;
+  border-radius: var(--border-radius-card) var(--border-radius-card) 0 0;
+  background-color: var(--col-dark-bg);
+  border-bottom: var(--border-primary) solid var(--col-dark-grey);
+  display: grid;
+  grid-template-columns: 5fr 25px 1fr;
+  align-items: center;
+  text-align: left;
+
+  & > h1 {
+    border-radius: var(--border-radius-card) 0 0 0;
+    background-color: var(--col-dark-bg);
+    padding: var(--border-primary) 0 var(--border-primary) 10px;
+    font-size: 1.6rem;
+    color: var(--col-dark-grey);
+  }
+
+  & > p {
+    background-color: var(--col-dark-bg);
+    text-align: left;
+  }
+
+  & > button {
+    height: 100%;
+    font-size: 1rem;
+    border-left: var(--border-primary) solid var(--col-dark-grey);
+    border-radius: 0 var(--border-radius-card) 0 0;
+  }
 `;
 
 const ButtonGroup = styled.div`
@@ -46,33 +77,49 @@ const ButtonGroup = styled.div`
   }
 `;
 
-const HeadingGroup = styled.div`
-  width: 100%;
-  border-radius: var(--border-radius-card) var(--border-radius-card) 0 0;
-  padding-bottom: var(--border-primary);
-  background-color: var(--col-dark-grey);
-  display: grid;
-  grid-template-columns: 5fr 1fr;
-  align-items: center;
-  text-align: left;
-  gap: var(--border-primary);
+const SharedUserPanel = styled.div`
+  /* padding: 10px; */
+  border: 3px solid var(--col-dark-grey);
+  border-radius: var(--border-radius-card);
+  display: flex;
+  flex-direction: column;
+  background-color: var(--col-dark-bg);
+  border: var(--border-primary) solid var(--col-dark-grey);
+  font-weight: bold;
+  margin: 10px 10px 10px 10px;
 
-  & > h1 {
-    border-radius: var(--border-radius-card) 0 0 0;
-    background-color: var(--col-dark-bg);
-    padding: var(--border-primary) 0 var(--border-primary) 10px;
-    font-size: 1.6rem;
-    color: var(--col-dark-grey);
-  }
+  & > div {
+    width: 100%;
+    padding: 10px;
+    background-color: ${(props) => props.color};
+    display: flex;
+    justify-content: space-between;
 
-  & > button {
-    height: 100%;
-    font-size: 1rem;
-    border-radius: 0 var(--border-radius-card) 0 0;
+    &:first-child {
+      border-radius: var(--border-radius-card) var(--border-radius-card) 0 0;
+    }
+
+    &:last-child {
+      border-radius: 0 0 var(--border-radius-card) var(--border-radius-card);
+    }
+
+    &:not(:last-child) {
+      border-bottom: var(--border-primary) solid var(--col-dark-grey);
+    }
   }
 `;
 
+const currencies = {
+  USD: "$",
+  EUR: "€",
+  GBP: "£",
+  BTC: "฿",
+  JPY: "¥",
+};
+
 const Card = ({ list, role }) => {
+  const { expenses, loading } = useSelector((state) => state.expenses);
+
   const [itemOpen, setItemOpen] = useState(false);
   const [userOpen, setUserOpen] = useState(false);
   const [categoryOpen, setCategoryOpen] = useState(false);
@@ -90,6 +137,7 @@ const Card = ({ list, role }) => {
       <ListPanel color="var(--col-dark-bg)">
         <HeadingGroup>
           <h1>{list.name}</h1>
+          <p>{list.shared ? "👥" : "👤"}</p>
           <Button
             onClick={() => deleteGroup(list._id)}
             color="var(--col-main-neg)"
@@ -97,14 +145,36 @@ const Card = ({ list, role }) => {
             ✖
           </Button>
         </HeadingGroup>
-        <br />
-        {/* <h2>Shared: {`${list.shared}`}</h2> */}
+
         <Table
           categories={list.categories}
           log={list.log}
-          currency={list.currency}
+          currencySymbol={currencies[list.currency]}
         />
-        <br />
+
+        {list.shared && (
+          <SharedUserPanel color="var(--col-dark-bg)">
+            {list.users.map((user) => (
+              <div>
+                <p>{user.name}</p>
+                <p>
+                  {currencies[list.currency]}
+                  {expenses.reduce((acc, group) => {
+                    for (let log of group.log) {
+                      if (
+                        isThisMonth(new Date(log.selectedDate)) &&
+                        log.payer === user.id
+                      ) {
+                        acc += parseFloat(log.amount, 10);
+                      }
+                    }
+                    return acc;
+                  }, 0)}
+                </p>
+              </div>
+            ))}
+          </SharedUserPanel>
+        )}
 
         <ButtonGroup>
           <Button onClick={() => setCategoryOpen(true)}>+ Category</Button>
@@ -130,13 +200,6 @@ const Card = ({ list, role }) => {
             users={list.users}
           />
         </Modal>
-        {/* <ItemModal
-          open={itemOpen}
-          closeHandler={() => setItemOpen(false)}
-          id={list._id}
-          categories={list.categories}
-          role={role}
-        /> */}
         {list.shared && (
           <React.Fragment>
             <AddUserModal

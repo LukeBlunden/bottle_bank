@@ -71,4 +71,18 @@ router.post("/item", auth, (req, res) => {
     .catch((err) => res.status(500).json({ msg: "Internal Server Error" }));
 });
 
+router.post("/user", auth, (req, res) => {
+  User.findOne({ email: req.body.email })
+    .then((res) => {
+      const addUser = { id: res._id.toString(), name: res.name };
+      IncomeGroup.findOneAndUpdate(
+        { _id: req.body.id },
+        { $push: { users: addUser } },
+        { new: true },
+        (err, res) => (err ? console.log(err) : console.log(res))
+      );
+    })
+    .catch((err) => res.status(400).json({ msg: "User not found" }));
+});
+
 module.exports = router;

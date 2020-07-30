@@ -50,7 +50,7 @@ const currencies = {
 const Table = (props) => {
   const tableRows = props.categories.map((category) => (
     <TableRow
-      currencySymbol={currencies[props.currency]}
+      currencySymbol={props.currencySymbol}
       name={category.name}
       log={props.log}
       key={category.name}

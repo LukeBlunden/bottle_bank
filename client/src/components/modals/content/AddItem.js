@@ -57,6 +57,7 @@ const AddItem = ({ hide, id, categories, role, users }) => {
     setDescription("");
     setAmount("");
     setCategory("");
+    setPayer(user._id);
     setSelectedDate(new Date());
     setCalendarOpen(false);
   };
@@ -68,6 +69,7 @@ const AddItem = ({ hide, id, categories, role, users }) => {
         placeholder="Description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
+        autoFocus
       />
       <select
         name="categories"
@@ -105,7 +107,11 @@ const AddItem = ({ hide, id, categories, role, users }) => {
       />
       <DatePickerPanel onClick={() => setCalendarOpen(!calendarOpen)}>
         <p>{format(selectedDate, "dd/MM/yy")}</p>
-        <p>📅</p>
+        <p>
+          <span role="img" aria-label="date picker">
+            📅
+          </span>
+        </p>
       </DatePickerPanel>
       <CalendarContainer open={calendarOpen}>
         <Calendar

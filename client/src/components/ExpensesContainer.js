@@ -8,13 +8,13 @@ import CardModal from "./modals/CardModal";
 const ExpensesContainer = (props) => {
   const dispatch = useDispatch();
   const { expenses, loading } = useSelector((state) => state.expenses);
-  const { user } = useSelector((state) => state.auth);
+  const { _id } = useSelector((state) => state.auth.user);
 
   useEffect(() => {
     if (expenses.length === 0) {
-      dispatch(getExpenses(user._id));
+      dispatch(getExpenses(_id));
     }
-  }, [dispatch]);
+  }, [dispatch, _id, expenses.length]);
 
   return (
     <React.Fragment>

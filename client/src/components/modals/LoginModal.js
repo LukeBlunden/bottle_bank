@@ -20,7 +20,7 @@ const LoginModal = ({ closeHandler, open }) => {
 
   useEffect(() => {
     id === "LOGIN_FAIL" ? setErrorMsg(msg) : setErrorMsg(null);
-  }, [msg]);
+  }, [msg, id]);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -28,7 +28,7 @@ const LoginModal = ({ closeHandler, open }) => {
       setPassword("");
       closeHandler();
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, closeHandler]);
 
   return (
     <Dialog open={open} onClose={closeHandler}>

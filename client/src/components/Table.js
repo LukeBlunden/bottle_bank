@@ -39,14 +39,6 @@ const OuterTable = styled.table`
   }
 `;
 
-const currencies = {
-  USD: "$",
-  EUR: "€",
-  GBP: "£",
-  BTC: "฿",
-  JPY: "¥",
-};
-
 const Table = (props) => {
   const tableRows = props.categories.map((category) => (
     <TableRow

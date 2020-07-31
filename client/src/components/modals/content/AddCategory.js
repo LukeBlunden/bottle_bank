@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addExpenseCategory } from "../../../actions/expensesActions";
 import { addIncomeCategory } from "../../../actions/incomeActions";
-import { Hidden } from "@material-ui/core";
 
 const AddCategory = ({ role, id, hide }) => {
   const [name, setName] = useState("");
@@ -23,6 +22,7 @@ const AddCategory = ({ role, id, hide }) => {
         placeholder="Category name"
         value={name}
         onChange={(e) => setName(e.target.value)}
+        autoFocus
       />
       <button type="submit">Submit Category</button>
     </form>

@@ -3,13 +3,10 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import "./App.css";
 
-import { Provider } from "react-redux";
-import store from "./store";
 import { useDispatch, useSelector } from "react-redux";
 
 import { loadUser } from "./actions/authActions";
 
-import { CssBaseline } from "@material-ui/core";
 import ExpensesContainer from "./components/ExpensesContainer";
 import Navbar from "./components/Navbar";
 import Dashboard from "./components/Dashboard";
@@ -22,12 +19,10 @@ function App() {
 
   useEffect(() => {
     dispatch(loadUser());
-  }, []);
+  }, [dispatch]);
 
   return (
-    // <Provider store={store}>
     <BrowserRouter>
-      {/* <CssBaseline /> */}
       <div className="App">
         <Navbar />
         <Switch>
@@ -46,7 +41,6 @@ function App() {
         </Switch>
       </div>
     </BrowserRouter>
-    // </Provider>
   );
 }
 

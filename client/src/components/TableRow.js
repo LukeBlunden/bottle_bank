@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { format, parseISO, isThisMonth } from "date-fns";
 import styled from "styled-components";
-import { KeyboardArrowUp, KeyboardArrowDown } from "@material-ui/icons";
 
 const OpenTable = styled.div`
   display: ${(props) => (props.open ? "initial" : "none")};

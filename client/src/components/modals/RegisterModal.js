@@ -12,7 +12,7 @@ const RegisterModal = ({ closeHandler, open }) => {
 
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.auth);
-  const { msg, status, id } = useSelector((state) => state.error);
+  const { msg, id } = useSelector((state) => state.error);
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
@@ -21,7 +21,7 @@ const RegisterModal = ({ closeHandler, open }) => {
 
   useEffect(() => {
     id === "REGISTER_FAIL" ? setErrorMsg(msg) : setErrorMsg(null);
-  }, [msg]);
+  }, [msg, id]);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -30,7 +30,7 @@ const RegisterModal = ({ closeHandler, open }) => {
       setPassword("");
       closeHandler();
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, closeHandler]);
 
   return (
     <Dialog open={open} onClose={closeHandler}>

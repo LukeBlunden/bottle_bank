@@ -118,7 +118,7 @@ const currencies = {
 };
 
 const Card = ({ list, role }) => {
-  const { expenses, loading } = useSelector((state) => state.expenses);
+  const { expenses } = useSelector((state) => state.expenses);
 
   const [itemOpen, setItemOpen] = useState(false);
   const [userOpen, setUserOpen] = useState(false);
@@ -155,7 +155,7 @@ const Card = ({ list, role }) => {
         {list.shared && (
           <SharedUserPanel color="var(--col-dark-bg)">
             {list.users.map((user) => (
-              <div>
+              <div key={user.id}>
                 <p>{user.name}</p>
                 <p>
                   {currencies[list.currency]}
@@ -184,22 +184,26 @@ const Card = ({ list, role }) => {
           )}
         </ButtonGroup>
 
-        <Modal open={categoryOpen} hide={() => setCategoryOpen(false)}>
-          <AddCategory
-            role={role}
-            id={list._id}
-            hide={() => setCategoryOpen(false)}
-          />
-        </Modal>
-        <Modal open={itemOpen} hide={() => setItemOpen(false)}>
-          <AddItem
-            role={role}
-            id={list._id}
-            hide={() => setItemOpen(false)}
-            categories={list.categories}
-            users={list.users}
-          />
-        </Modal>
+        {categoryOpen && (
+          <Modal open={categoryOpen} hide={() => setCategoryOpen(false)}>
+            <AddCategory
+              role={role}
+              id={list._id}
+              hide={() => setCategoryOpen(false)}
+            />
+          </Modal>
+        )}
+        {itemOpen && (
+          <Modal open={itemOpen} hide={() => setItemOpen(false)}>
+            <AddItem
+              role={role}
+              id={list._id}
+              hide={() => setItemOpen(false)}
+              categories={list.categories}
+              users={list.users}
+            />
+          </Modal>
+        )}
         {list.shared && (
           <React.Fragment>
             <AddUserModal

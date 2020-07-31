@@ -9,13 +9,13 @@ import Card from "./Card";
 const IncomeContainer = (props) => {
   const dispatch = useDispatch();
   const { income, loading } = useSelector((state) => state.income);
-  const { user } = useSelector((state) => state.auth);
+  const { _id } = useSelector((state) => state.auth.user);
 
   useEffect(() => {
     if (income.length === 0) {
-      dispatch(getIncome(user._id));
+      dispatch(getIncome(_id));
     }
-  }, [dispatch]);
+  }, [dispatch, _id, income.length]);
 
   return (
     <React.Fragment>

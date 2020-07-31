@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 const ModalBackdrop = styled.div`
@@ -28,8 +28,8 @@ const ModalContainer = styled.div`
     padding: 10px;
     border: none;
     background-color: var(--col-dark-bg);
-
-    &:not(:last-child) {
+    outline: none;
+    b &:not(:last-child) {
       margin-bottom: var(--border-primary);
     }
 

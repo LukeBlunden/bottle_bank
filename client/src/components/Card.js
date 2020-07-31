@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 import AddCategory from "./modals/content/AddCategory";
 import AddItem from "./modals/content/AddItem";
-import AddUserModal from "./modals/AddUserModal";
+import AddUser from "./modals/content/AddUser";
 import Modal from "./modals/Modal";
 import Table from "./Table";
 import Button from "./UI/Button";
@@ -204,14 +204,10 @@ const Card = ({ list, role }) => {
             />
           </Modal>
         )}
-        {list.shared && (
-          <React.Fragment>
-            <AddUserModal
-              open={userOpen}
-              id={list._id}
-              closeHandler={() => setUserOpen(false)}
-            />
-          </React.Fragment>
+        {list.shared && userOpen && (
+          <Modal open={userOpen} hide={() => setUserOpen(false)}>
+            <AddUser id={list._id} hide={() => setUserOpen(false)} />
+          </Modal>
         )}
       </ListPanel>
     </ListContainer>

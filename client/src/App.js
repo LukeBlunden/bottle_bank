@@ -32,11 +32,12 @@ function App() {
           <Route path="/income">
             {isAuthenticated ? <IncomeContainer /> : <Redirect to="/" />}
           </Route>
-          <Route path="/dashboard">
+          {/* <Route path="/dashboard">
             {isAuthenticated ? <Dashboard /> : <Redirect to="/" />}
-          </Route>
+          </Route> */}
           <Route path="/">
-            <Home />
+            {isAuthenticated ? <Dashboard /> : <Home />}
+            {/* <Home /> */}
           </Route>
         </Switch>
       </div>

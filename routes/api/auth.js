@@ -45,16 +45,19 @@ router.post("/", (req, res) => {
       jwt.sign(
         { id: user.id },
         config.get("jwtSecret"),
-        { expiresIn: 3600 },
+        { expiresIn: 7200 },
         (err, token) => {
           if (err) throw err;
           // Return token and saved user without password
+          console.log(user);
           res.json({
             token,
             user: {
-              id: user.id,
+              _id: user.id,
               name: user.name,
               email: user.email,
+              regDate: user.regDate,
+              __v: user.__v,
             },
           });
         }

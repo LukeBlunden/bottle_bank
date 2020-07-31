@@ -52,16 +52,16 @@ const Dashboard = (props) => {
   const { expenses, loading: expensesLoading } = useSelector(
     (state) => state.expenses
   );
-  const { _id } = useSelector((state) => state.auth.user);
+  const { user, isLoading } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (income.length === 0) {
-      dispatch(getIncome(_id));
+    if (income.length === 0 && isLoading === false) {
+      dispatch(getIncome(user._id));
     }
-    if (expenses.length === 0) {
-      dispatch(getExpenses(_id));
+    if (expenses.length === 0 && isLoading === false) {
+      dispatch(getExpenses(user._id));
     }
-  }, [dispatch, income, expenses, _id]);
+  }, [dispatch, income.length, expenses.length, user._id, isLoading]);
 
   useEffect(() => {
     if (!incomeLoading) {
@@ -92,7 +92,7 @@ const Dashboard = (props) => {
   return (
     <Theme>
       <React.Fragment>
-        <h1>Dashboard</h1>
+        {/* <h1>Dashboard</h1> */}
         <GridContainer>
           <StackedCard>
             <InfoPanel color="var(--col-dark-bg)">

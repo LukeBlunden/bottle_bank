@@ -54,6 +54,10 @@ const ModalContainer = styled.div`
       border-radius: 0 0 10px 10px;
     }
   }
+
+  & p {
+    color: white;
+  }
 `;
 
 const Modal = ({ open, hide, children }) => {

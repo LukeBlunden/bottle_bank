@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addExpenseCategory } from "../../../actions/expensesActions";
 import { addIncomeCategory } from "../../../actions/incomeActions";

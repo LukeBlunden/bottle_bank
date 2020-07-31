@@ -1,24 +1,36 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getExpenses, addExpenseGroup } from "../actions/expensesActions";
 
 import Card from "./Card";
-import CardModal from "./modals/CardModal";
+import Modal from "./modals/Modal";
+import AddGroup from "./modals/content/AddGroup";
+import Button from "./UI/Button";
 
 const ExpensesContainer = (props) => {
+  const [groupOpen, setGroupOpen] = useState(false);
+
   const dispatch = useDispatch();
   const { expenses, loading } = useSelector((state) => state.expenses);
-  const { _id } = useSelector((state) => state.auth.user);
+  const { user, isLoading } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (expenses.length === 0) {
-      dispatch(getExpenses(_id));
+    if (expenses.length === 0 && isLoading === false) {
+      dispatch(getExpenses(user._id));
     }
-  }, [dispatch, _id, expenses.length]);
+  }, [dispatch, user._id, expenses.length, isLoading]);
 
   return (
     <React.Fragment>
-      <CardModal dispatchMethod={addExpenseGroup}>Add Expense Group</CardModal>
+      <Button onClick={() => setGroupOpen(true)}>Add Expense Group</Button>
+      {groupOpen && (
+        <Modal open={groupOpen} hide={() => setGroupOpen(false)}>
+          <AddGroup
+            hide={() => setGroupOpen(false)}
+            dispatchMethod={addExpenseGroup}
+          />
+        </Modal>
+      )}
       {loading && <p>Loading...</p>}
       {expenses.map((expense) => (
         <Card key={expense._id} list={expense} role="expense" />

@@ -7,8 +7,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearErrors } from "../actions/errorActions";
 import { logout } from "../actions/authActions";
 
-import RegisterModal from "./modals/RegisterModal";
-import LoginModal from "./modals/LoginModal";
+import Modal from "./modals/Modal";
+import Login from "./modals/content/Login";
+import Register from "./modals/content/Register";
 
 const NavContainer = styled.nav`
   display: grid;
@@ -35,7 +36,7 @@ const LinksContainer = styled.div`
   grid-column: 1 / span 3;
   transition: max-height 0.2s ease-out;
   max-height: ${(props) =>
-    props.open ? (props.isAuth ? "15em" : "9em") : "0"};
+    props.open ? (props.isAuth ? "12em" : "9em") : "0"};
   overflow: hidden;
 `;
 
@@ -82,13 +83,23 @@ const Navbar = (props) => {
       >
         Register
       </StyledLink>
-      <RegisterModal
-        open={regOpen}
-        closeHandler={() => {
-          setRegOpen(false);
-          dispatch(clearErrors());
-        }}
-      />
+      {regOpen && (
+        <Modal
+          open={regOpen}
+          hide={() => {
+            setRegOpen(false);
+            dispatch(clearErrors());
+          }}
+        >
+          <Register
+            hide={() => {
+              setRegOpen(false);
+              dispatch(clearErrors());
+            }}
+          />
+        </Modal>
+      )}
+
       <StyledLink
         to="#"
         onClick={() => {
@@ -98,21 +109,30 @@ const Navbar = (props) => {
       >
         Login
       </StyledLink>
-      <LoginModal
-        open={loginOpen}
-        closeHandler={() => {
-          setLoginOpen(false);
-          dispatch(clearErrors());
-        }}
-      />
+      {loginOpen && (
+        <Modal
+          open={loginOpen}
+          hide={() => {
+            setLoginOpen(false);
+            dispatch(clearErrors());
+          }}
+        >
+          <Login
+            hide={() => {
+              setLoginOpen(false);
+              dispatch(clearErrors());
+            }}
+          />
+        </Modal>
+      )}
     </React.Fragment>
   );
 
   const authLinks = (
     <React.Fragment>
-      <StyledNavLink exact to="/dashboard" onClick={() => setOpen(false)}>
+      {/* <StyledNavLink exact to="/dashboard" onClick={() => setOpen(false)}>
         Dashboard
-      </StyledNavLink>
+      </StyledNavLink> */}
       <StyledNavLink to="/expenses" onClick={() => setOpen(false)}>
         Expenses
       </StyledNavLink>

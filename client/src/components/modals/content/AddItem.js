@@ -39,6 +39,7 @@ const AddItem = ({ hide, id, categories, role, users }) => {
   const [payer, setPayer] = useState(user._id);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [calendarOpen, setCalendarOpen] = useState(false);
+  const [recurring, setRecurring] = useState(false);
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
@@ -48,6 +49,7 @@ const AddItem = ({ hide, id, categories, role, users }) => {
       category,
       payer,
       selectedDate,
+      recurring,
       id,
     };
     role === "expense"
@@ -60,6 +62,7 @@ const AddItem = ({ hide, id, categories, role, users }) => {
     setPayer(user._id);
     setSelectedDate(new Date());
     setCalendarOpen(false);
+    setRecurring(false);
   };
 
   return (
@@ -120,6 +123,14 @@ const AddItem = ({ hide, id, categories, role, users }) => {
           value={selectedDate}
         />
       </CalendarContainer>
+      <input
+        type="checkbox"
+        name="recurring"
+        id="recurring"
+        checked={recurring}
+        onChange={() => setRecurring(!recurring)}
+      />
+      <label htmlFor="shared">Recurring</label>
       <button type="submit">Submit Item</button>
     </form>
   );

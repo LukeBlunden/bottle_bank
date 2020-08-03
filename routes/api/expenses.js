@@ -37,7 +37,6 @@ router.post("/", auth, (req, res) => {
 // @desc Delete an expense group
 // @access private
 router.delete("/:id", auth, (req, res) => {
-  console.log(req.params.id);
   ExpenseGroup.findByIdAndDelete(req.params.id)
     .then((expenseGroup) => res.json(expenseGroup))
     .catch((err) => res.status(500).json({ msg: "Internal Server Error" }));
@@ -62,11 +61,20 @@ router.post("/category", auth, (req, res) => {
 // @desc Add an expense item to an expense category
 // @access private
 router.post("/item", auth, (req, res) => {
-  const { description, amount, category, payer, selectedDate } = req.body;
+  const {
+    description,
+    amount,
+    category,
+    payer,
+    selectedDate,
+    recurring,
+  } = req.body;
   ExpenseGroup.findByIdAndUpdate(
     req.body.id,
     {
-      $push: { log: { description, amount, category, payer, selectedDate } },
+      $push: {
+        log: { description, amount, category, payer, selectedDate, recurring },
+      },
     },
     { new: true }
   )

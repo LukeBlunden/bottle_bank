@@ -67,7 +67,9 @@ const Dashboard = (props) => {
     if (!incomeLoading) {
       const newTotal = income.reduce((acc, group) => {
         for (let log of group.log) {
-          acc += parseFloat(log.amount, 10);
+          if (isThisMonth(new Date(log.selectedDate))) {
+            acc += parseFloat(log.amount, 10);
+          }
         }
         return acc;
       }, 0);

@@ -59,11 +59,13 @@ router.post("/category", auth, (req, res) => {
 // @desc Add an income item to an income category
 // @access private
 router.post("/item", auth, (req, res) => {
-  const { description, amount, category, selectedDate } = req.body;
+  const { description, amount, category, selectedDate, recurring } = req.body;
   IncomeGroup.findByIdAndUpdate(
     req.body.id,
     {
-      $push: { log: { description, amount, category, selectedDate } },
+      $push: {
+        log: { description, amount, category, selectedDate, recurring },
+      },
     },
     { new: true }
   )

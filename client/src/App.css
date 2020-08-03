@@ -11,12 +11,16 @@
   --col-dark-grey: #33393c;
 
   --col-main-primary: #f4413d;
+  --col-lighter-primary: #fbb7b6;
+  --col-lightest-primary: #fee6e6;
 
   --col-main-neg: #fc7629;
 
   --col-attention: #fbca00;
 
   --col-main-pos: #7cbb82;
+  --col-lighter-pos: #d0e7d2;
+  --col-lightest-pos: #f2f8f2;
 
   --border-primary: 3px;
 

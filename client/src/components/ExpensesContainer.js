@@ -33,7 +33,7 @@ const ExpensesContainer = (props) => {
       )}
       {loading && <p>Loading...</p>}
       {expenses.map((expense) => (
-        <Card key={expense._id} list={expense} role="expense" />
+        <Card key={expense._id} group={expense} role="expense" />
       ))}
     </React.Fragment>
   );

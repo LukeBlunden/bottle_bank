@@ -2,6 +2,12 @@ import React, { useState } from "react";
 import { format, parseISO, isThisMonth } from "date-fns";
 import styled from "styled-components";
 
+import Icon from "./UI/Icon";
+
+const Svg = styled(Icon)`
+  color: var(--col-dark-grey);
+`;
+
 const OpenTable = styled.div`
   display: ${(props) => (props.open ? "initial" : "none")};
 `;
@@ -40,7 +46,9 @@ const TableRow = ({ name, log, currencySymbol }) => {
   const [open, setOpen] = useState(false);
 
   const items = log.filter(
-    (item) => item.category === name && isThisMonth(new Date(item.selectedDate))
+    (item) =>
+      item.category === name &&
+      (isThisMonth(new Date(item.selectedDate)) || item.recurring)
   );
   const total = items.reduce(
     (acc, item) => acc + parseFloat(item.amount, 10),
@@ -51,8 +59,24 @@ const TableRow = ({ name, log, currencySymbol }) => {
     <React.Fragment>
       <tr className="head">
         <th onClick={() => setOpen(!open)} className="headcell arrow">
-          {/* {open ? <KeyboardArrowUp /> : <KeyboardArrowDown />} */}
-          {open ? "⯅" : "⯆"}
+          {open ? (
+            // <ArrowIcon src={arrowUp} alt="arrow up icon" />
+            <Svg width="15" height="8" viewBox="0 0 20 11">
+              <path
+                d="M19.708 10.634c.39-.405.39-1.06 0-1.464L11.444.607a1.95 1.95 0 00-2.827 0L.292 9.232c-.385.4-.39 1.048-.01 1.454a.976.976 0 001.425.01l7.617-7.893a.975.975 0 011.414 0l7.557 7.83a.974.974 0 001.413 0"
+                fill="currentColor"
+                fillRule="evenodd"
+              />
+            </Svg>
+          ) : (
+            <Svg width="15" height="8" viewBox="0 0 20 11">
+              <path
+                d="M.292.366c-.39.405-.39 1.06 0 1.464l8.264 8.563c.78.81 2.047.81 2.827 0l8.325-8.625c.385-.4.39-1.048.01-1.454a.976.976 0 00-1.425-.011l-7.617 7.893a.975.975 0 01-1.414 0L1.705.366a.974.974 0 00-1.413 0"
+                fill="currentColor"
+                fillRule="evenodd"
+              />
+            </Svg>
+          )}
         </th>
         <th className="headcell">{name}</th>
         <th className="headcell">

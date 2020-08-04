@@ -9,6 +9,7 @@ const TableContainer = styled.div`
 const OuterTable = styled.table`
   display: grid;
   grid-template-columns: 3rem minmax(5rem, 100%) minmax(3.5rem, 1fr);
+  /* align-items: center; */
   max-width: 100%;
   text-align: left;
   border: 3px solid var(--col-dark-grey);
@@ -29,7 +30,6 @@ const OuterTable = styled.table`
       & > th.headcell {
         padding: 4px 0;
         background-color: var(--col-darker-bg);
-        /* border-bottom: 2px solid var(--col-dark-grey); */
       }
 
       & > th:first-child {

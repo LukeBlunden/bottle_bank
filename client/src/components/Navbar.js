@@ -7,10 +7,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearErrors } from "../actions/errorActions";
 import { logout } from "../actions/authActions";
 
+import { login } from "../actions/authActions";
+
 import Modal from "./modals/Modal";
 import Login from "./modals/content/Login";
 import Register from "./modals/content/Register";
 import Icon from "./UI/Icon";
+import Input from "./UI/Input";
+import Form from "./Form";
 
 const NavContainer = styled.nav`
   display: grid;
@@ -89,6 +93,9 @@ const Navbar = (props) => {
   const [regOpen, setRegOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.auth);
 
@@ -119,32 +126,9 @@ const Navbar = (props) => {
           />
         </Modal>
       )}
-
-      <StyledLink
-        to="#"
-        onClick={() => {
-          setOpen(false);
-          setLoginOpen(true);
-        }}
-      >
+      <StyledNavLink to="/login" onClick={() => setOpen(false)}>
         Login
-      </StyledLink>
-      {loginOpen && (
-        <Modal
-          open={loginOpen}
-          hide={() => {
-            setLoginOpen(false);
-            dispatch(clearErrors());
-          }}
-        >
-          <Login
-            hide={() => {
-              setLoginOpen(false);
-              dispatch(clearErrors());
-            }}
-          />
-        </Modal>
-      )}
+      </StyledNavLink>
     </React.Fragment>
   );
 

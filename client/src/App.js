@@ -1,19 +1,17 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./App.css";
 
-import { useDispatch, useSelector } from "react-redux";
-
-import { loadUser } from "./actions/authActions";
-
-import ExpensesContainer from "./components/ExpensesContainer";
 import Container from "./components/Container";
 import Navbar from "./components/Navbar";
 import Dashboard from "./components/Dashboard";
-import IncomeContainer from "./components/IncomeContainer";
 import Home from "./components/Home";
 import Login from "./components/Login";
+import Register from "./components/Register";
+
+import { loadUser } from "./actions/authActions";
 
 import {
   getExpenses,
@@ -24,11 +22,22 @@ import {
   addSharedUser,
 } from "./actions/expensesActions";
 
+import {
+  getIncome,
+  addIncomeGroup,
+  deleteIncomeGroup,
+  addIncomeCategory,
+  addIncomeItem,
+} from "./actions/incomeActions";
+
 function App() {
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.auth);
   const { expenses, loading: expensesLoading } = useSelector(
     (state) => state.expenses
+  );
+  const { income, loading: incomeLoading } = useSelector(
+    (state) => state.income
   );
 
   useEffect(() => {
@@ -58,10 +67,27 @@ function App() {
             )}
           </Route>
           <Route path="/income">
-            {isAuthenticated ? <IncomeContainer /> : <Redirect to="/" />}
+            {isAuthenticated ? (
+              <Container
+                data={income}
+                loading={incomeLoading}
+                getData={getIncome}
+                addGroup={addIncomeGroup}
+                deleteGroup={deleteIncomeGroup}
+                addCategory={addIncomeCategory}
+                addItem={addIncomeItem}
+                // addUser={addSharedUser}
+              />
+            ) : (
+              <Redirect to="/" />
+            )}
+            {/* {isAuthenticated ? <IncomeContainer /> : <Redirect to="/" />} */}
           </Route>
           <Route path="/login">
             <Login />
+          </Route>
+          <Route path="/register">
+            <Register />
           </Route>
           {/* <Route path="/dashboard">
             {isAuthenticated ? <Dashboard /> : <Redirect to="/" />}

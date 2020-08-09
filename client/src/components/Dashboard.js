@@ -42,16 +42,21 @@ const InfoPanel = styled.div`
 `;
 
 const Dashboard = (props) => {
-  const [incomeTotal, setIncomeTotal] = useState(null);
-  const [expensesTotal, setExpensesTotal] = useState(null);
+  const [incomeTotal, setIncomeTotal] = useState({ current: 0, past: 0 });
+  const [expensesTotal, setExpensesTotal] = useState({ current: 0, past: 0 });
+
+  const [difference, setDifference] = useState({ current: 0, past: 0 });
 
   const dispatch = useDispatch();
+
   const { income, loading: incomeLoading } = useSelector(
     (state) => state.income
   );
+
   const { expenses, loading: expensesLoading } = useSelector(
     (state) => state.expenses
   );
+
   const { user, isLoading } = useSelector((state) => state.auth);
 
   useEffect(() => {
@@ -67,29 +72,41 @@ const Dashboard = (props) => {
     if (!incomeLoading) {
       const newTotal = income.reduce((acc, group) => {
         for (let log of group.log) {
-          if (isThisMonth(new Date(log.selectedDate))) {
-            acc += parseFloat(log.amount, 10);
+          if (isThisMonth(new Date(log.selectedDate)) || log.recurring) {
+            acc.current += parseFloat(log.amount, 10);
+          } else {
+            acc.past += parseFloat(log.amount, 10);
           }
         }
         return acc;
-      }, 0);
+      }, incomeTotal);
       setIncomeTotal(newTotal);
     }
-  }, [incomeLoading, income]);
+  }, [incomeLoading, income, incomeTotal]);
 
   useEffect(() => {
     if (!expensesLoading) {
       const newTotal = expenses.reduce((acc, group) => {
         for (let log of group.log) {
-          if (isThisMonth(new Date(log.selectedDate))) {
-            acc += parseFloat(log.amount, 10);
+          if (isThisMonth(new Date(log.selectedDate)) || log.recurring) {
+            acc.current += parseFloat(log.amount, 10);
+          } else {
+            acc.past += parseFloat(log.amount, 10);
           }
         }
         return acc;
-      }, 0);
+      }, expensesTotal);
       setExpensesTotal(newTotal);
     }
-  }, [expensesLoading, expenses]);
+  }, [expensesLoading, expenses, expensesTotal]);
+
+  // This is basically just rerendering the page and recalcing the totals - need to fix
+  useEffect(() => {
+    setDifference((difference) => ({
+      ...difference,
+      past: incomeTotal.past - expensesTotal.past,
+    }));
+  }, [incomeTotal.past, expensesTotal.past]);
 
   return (
     <Theme>
@@ -99,30 +116,56 @@ const Dashboard = (props) => {
           <StackedCard>
             <InfoPanel color="var(--col-dark-bg)">
               <p>Current Savings</p>
-              <p>$2000.00</p>
+              <p>
+                {`£${(
+                  incomeTotal.past -
+                  expensesTotal.past +
+                  (incomeTotal.current - expensesTotal.current)
+                ).toFixed(2)}`}
+              </p>
             </InfoPanel>
             <InfoPanel color="var(--col-main-neg)">
               <p>Monthly Expenses</p>
-              <p>{expensesTotal ? `-$${expensesTotal.toFixed(2)}` : "..."}</p>
+              <p>{`-£${expensesTotal.current.toFixed(2)}`}</p>
             </InfoPanel>
             <InfoPanel color="var(--col-main-pos)">
               <p>Monthly Income</p>
-              <p>{incomeTotal ? `+$${incomeTotal.toFixed(2)}` : "..."}</p>
+              <p>{`+£${incomeTotal.current.toFixed(2)}`}</p>
             </InfoPanel>
             <InfoPanel color="var(--col-dark-bg)">
               <p>Initial Savings</p>
-              <p>$1000.00</p>
+              <p>{`£${(incomeTotal.past - expensesTotal.past).toFixed(2)}`}</p>
             </InfoPanel>
           </StackedCard>
 
           <StackedCard>
             <InfoPanel color="var(--col-main-pos)">
               <p>Monthly Performance</p>
-              <p>+10%</p>
+              <p>
+                {incomeTotal.past - expensesTotal.past >
+                incomeTotal.past -
+                  expensesTotal.past +
+                  (incomeTotal.current - expensesTotal.current)
+                  ? "-"
+                  : "+"}
+                {(
+                  (Math.abs(
+                    incomeTotal.past -
+                      expensesTotal.past -
+                      (incomeTotal.past -
+                        expensesTotal.past +
+                        incomeTotal.current -
+                        expensesTotal.current)
+                  ) /
+                    (incomeTotal.past - expensesTotal.past)) *
+                  100
+                ).toFixed(2)}
+                %
+              </p>
             </InfoPanel>
             <InfoPanel color="var(--col-main-pos)">
               <p>Annual Performance</p>
-              <p>+50%</p>
+              <p>+0%</p>
             </InfoPanel>
           </StackedCard>
         </GridContainer>

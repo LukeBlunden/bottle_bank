@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { getExpenses, addExpenseGroup } from "../actions/expensesActions";
 
 import Card from "./Card";
 import Modal from "./modals/Modal";
-import AddGroup from "./modals/content/AddGroup";
 import Form from "./Form";
 import Button from "./UI/Button";
 import Input from "./UI/Input";
 import Select from "./UI/Select";
+import Option from "./UI/Option";
 
 const currencies = [
   { value: "GBP", label: "£" },
@@ -35,13 +34,13 @@ const Container = ({
   const [groupShared, setGroupShared] = useState(false);
 
   const dispatch = useDispatch();
-  const { user, isLoading } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (data.length === 0 && loading === false) {
       dispatch(getData(user._id));
     }
-  }, [dispatch, user._id, data.length, loading]);
+  }, [dispatch, user._id, data.length, loading, getData]);
 
   function submitNewGroup(e) {
     e.preventDefault();
@@ -75,7 +74,13 @@ const Container = ({
               value={groupCurrency}
               onChange={setGroupCurrency}
               options={currencies}
-            />
+            >
+              {currencies.map((currency) => (
+                <Option key={currency.value} value={currency.value}>
+                  {currency.label}
+                </Option>
+              ))}
+            </Select>
             <Input
               name="group shared"
               label="Group Shared"
@@ -89,7 +94,14 @@ const Container = ({
       )}
       {loading && <p>Loading...</p>}
       {data.map((group) => (
-        <Card key={group._id} group={group} role="expense"></Card>
+        <Card
+          key={group._id}
+          group={group}
+          deleteGroup={deleteGroup}
+          addCategory={addCategory}
+          addItem={addItem}
+          addUser={addUser}
+        />
       ))}
     </React.Fragment>
   );

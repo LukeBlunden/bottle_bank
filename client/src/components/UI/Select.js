@@ -19,31 +19,17 @@ const InputGroup = styled.div`
   }
 `;
 
-const Select = ({ name, label, value, onChange, options }) => {
+const Select = ({ name, label, value, onChange, children }) => {
   return (
     <InputGroup>
       <label htmlFor={name}>{label}</label>
-      {/* <select
-        name={name}
-        type={type}
-        placeholder={placeholder}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        autoFocus={autoFocus}
-        autoComplete="on"
-        required
-      /> */}
       <select
         name={name}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         required
       >
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
+        {children}
       </select>
     </InputGroup>
   );

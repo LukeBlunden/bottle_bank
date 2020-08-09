@@ -31,7 +31,7 @@ export const addIncomeGroup = (newIncome, user) => (dispatch, getState) => {
 
 export const deleteIncomeGroup = (listId) => (dispatch, getState) => {
   axios
-    .delete("/api/income", { data: listId }, tokenConfig(getState))
+    .delete(`/api/income/${listId}`, tokenConfig(getState))
     .then((res) => dispatch({ type: DELETE_INCOME_GROUP, payload: res.data }))
     .catch((err) =>
       dispatch(returnErrors(err.response.data, err.response.status))

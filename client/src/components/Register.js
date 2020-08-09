@@ -6,10 +6,11 @@ import Input from "./UI/Input";
 import Button from "./UI/Button";
 import Form from "./Form";
 
-import { login } from "../actions/authActions";
+import { register } from "../actions/authActions";
 
-const Login = (props) => {
+const Register = (props) => {
   const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -22,10 +23,10 @@ const Login = (props) => {
       <Form
         onSubmit={(e) => {
           e.preventDefault();
-          dispatch(login(email, password));
+          dispatch(register(name, email, password));
         }}
       >
-        {id === "LOGIN_FAIL" ? msg : null}
+        {id === "REGISTER_FAIL" ? msg : null}
         <Input
           name="email"
           label="User Email"
@@ -35,16 +36,23 @@ const Login = (props) => {
           autoFocus
         />
         <Input
+          name="name"
+          label="User Name"
+          type="text"
+          value={name}
+          onChange={setName}
+        />
+        <Input
           name="password"
           label="User Password"
           type="password"
           value={password}
           onChange={setPassword}
         />
-        <Button type="submit">Login</Button>
+        <Button type="submit">Register</Button>
       </Form>
     </React.Fragment>
   );
 };
 
-export default Login;
+export default Register;

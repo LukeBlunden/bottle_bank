@@ -4,24 +4,15 @@ import Logo from "../assets/logo.png";
 import { NavLink, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { clearErrors } from "../actions/errorActions";
 import { logout } from "../actions/authActions";
 
-import { login } from "../actions/authActions";
-
-import Modal from "./modals/Modal";
-import Login from "./modals/content/Login";
-import Register from "./modals/content/Register";
 import Icon from "./UI/Icon";
-import Input from "./UI/Input";
-import Form from "./Form";
 
 const NavContainer = styled.nav`
   display: grid;
   grid-template-columns: 3rem auto 2rem;
   color: #33393c;
   padding: 0.5rem;
-  /* background-color: #2f2d52; */
   background-color: var(--col-main-primary);
   margin-bottom: 1rem;
   align-items: center;
@@ -82,50 +73,21 @@ const StyledLink = styled(Link)`
 `;
 
 const Svg = styled(Icon)`
-  /* width: 17px; */
-  /* height: 12px; */
   color: white;
   opacity: 80%;
 `;
 
 const Navbar = (props) => {
   const [open, setOpen] = useState(false);
-  const [regOpen, setRegOpen] = useState(false);
-  const [loginOpen, setLoginOpen] = useState(false);
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
   const { isAuthenticated } = useSelector((state) => state.auth);
 
   const guestLinks = (
     <React.Fragment>
-      <StyledLink
-        to="#"
-        onClick={() => {
-          setOpen(false);
-          setRegOpen(true);
-        }}
-      >
+      <StyledNavLink to="/register" onClick={() => setOpen(false)}>
         Register
-      </StyledLink>
-      {regOpen && (
-        <Modal
-          open={regOpen}
-          hide={() => {
-            setRegOpen(false);
-            dispatch(clearErrors());
-          }}
-        >
-          <Register
-            hide={() => {
-              setRegOpen(false);
-              dispatch(clearErrors());
-            }}
-          />
-        </Modal>
-      )}
+      </StyledNavLink>
       <StyledNavLink to="/login" onClick={() => setOpen(false)}>
         Login
       </StyledNavLink>
@@ -134,9 +96,6 @@ const Navbar = (props) => {
 
   const authLinks = (
     <React.Fragment>
-      {/* <StyledNavLink exact to="/dashboard" onClick={() => setOpen(false)}>
-        Dashboard
-      </StyledNavLink> */}
       <StyledNavLink to="/expenses" onClick={() => setOpen(false)}>
         -
         <Svg viewBox="0 0 20 12" height="12" width="20">
@@ -154,7 +113,6 @@ const Navbar = (props) => {
         Income
       </StyledNavLink>
       <StyledLink
-        // exact
         to="/"
         onClick={() => {
           setOpen(false);

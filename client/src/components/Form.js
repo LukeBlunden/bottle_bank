@@ -7,8 +7,40 @@ const StyledForm = styled.form`
   padding: 2rem;
   text-align: left;
 
+  & label {
+    margin-bottom: 0.3rem;
+    font-size: 0.8rem;
+    /* margin-left: 0.5rem; */
+  }
+
+  & input,
+  & select {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    border: var(--border-primary) solid var(--col-dark-grey);
+    outline: none;
+    background-color: var(--col-main-bg);
+    margin: 0 -0.5rem;
+  }
+
+  & input[type="checkbox"] {
+    appearance: none;
+    margin-right: 0rem;
+
+    &:checked {
+      background-color: var(--col-main-pos);
+    }
+  }
+
+  & > button {
+    border-radius: 0.5rem;
+    border: var(--border-primary) solid var(--col-dark-grey);
+    padding: 0.5rem;
+    margin: 0 -0.5rem;
+  }
+
   & > *:not(:last-child) {
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
 `;
 

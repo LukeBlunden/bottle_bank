@@ -18,11 +18,13 @@ const ModalContainer = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 80%;
-  padding: var(--border-primary);
+  /* padding: var(--border-primary); */
   border-radius: var(--border-radius-card);
-  background-color: var(--col-dark-grey);
+  /* background-color: var(--col-dark-grey); */
+  background-color: var(--col-dark-bg);
+  border: var(--border-primary) solid var(--col-dark-grey);
   display: ${(props) => (props.open ? "initial" : "none")};
-
+  /* 
   & input {
     width: 100%;
     padding: 10px;
@@ -57,7 +59,7 @@ const ModalContainer = styled.div`
 
   & p {
     color: white;
-  }
+  } */
 `;
 
 const Modal = ({ open, hide, children }) => {

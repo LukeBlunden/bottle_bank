@@ -4,18 +4,15 @@ import styled from "styled-components";
 const StyledButton = styled.button`
   padding: 0.5rem 1rem;
   background-color: ${(props) => props.color};
-  /* color: white; */
-  width: ${(props) => props.width};
+  ${(props) => (props.width ? "width:" + props.width : null)};
   border: none;
-  /* border-radius: 1rem; */
-  /* margin: 0 0.5rem; */
 `;
 
 const Button = ({
   onClick,
   children,
   color = "var(--col-main-pos)",
-  width = "100%",
+  width,
 }) => {
   return (
     <StyledButton onClick={onClick} color={color} width={width}>

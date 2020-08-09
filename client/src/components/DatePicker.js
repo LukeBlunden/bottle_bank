@@ -5,22 +5,45 @@ import Calendar from "react-calendar";
 
 const DatePickerPanel = styled.div`
   display: flex;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: var(--border-primary) solid var(--col-dark-grey);
+  outline: none;
+  background-color: var(--col-main-bg);
+  margin: 0 -0.5rem;
+
+  & > p {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+  }
 `;
 
 const CalendarContainer = styled.div`
-  padding: ${(props) => (props.open ? "10px" : "0")};
+  padding-top: ${(props) => (props.open ? "10px" : "0")};
   overflow: hidden;
+  text-align: center;
 
   & .calendar {
-    max-height: ${(props) => (props.open ? "12rem" : "0")};
+    max-height: ${(props) => (props.open ? "13rem" : "0")};
+
     & button {
       background-color: white;
       border: none;
       padding: 5px;
+      border-radius: 0;
+      outline: none;
+      /* width: 100%; */
+
+      &:focus {
+        background-color: var(--col-main-pos);
+      }
+    }
+
+    & input {
     }
 
     & abbr {
-      /* color: white; */
     }
   }
 `;
@@ -31,8 +54,8 @@ const DatePicker = ({ value, onChange }) => {
   return (
     <React.Fragment>
       <DatePickerPanel onClick={() => setCalendarOpen(!calendarOpen)}>
-        <p>{format(value, "dd/MM/yy")}</p>
         <p>
+          <span>{format(value, "dd/MM/yy")}</span>
           <span role="img" aria-label="date picker">
             📅
           </span>

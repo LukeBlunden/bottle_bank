@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Card from "./Card";
-import Modal from "./modals/Modal";
+import Modal from "./UI/Modal";
 import Form from "./Form";
 import Button from "./UI/Button";
 import Input from "./UI/Input";

@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-const Option = ({ key, value, children }) => {
+const Option = ({ value, children }) => {
   return (
-    <option key={key} value={value}>
+    <option key={value} value={value}>
       {children}
     </option>
   );

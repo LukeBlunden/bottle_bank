@@ -3,10 +3,11 @@ import styled from "styled-components";
 import { isThisMonth } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 
-import Modal from "./modals/Modal";
+import Modal from "./UI/Modal";
 import Table from "./Table";
 import Button from "./UI/Button";
 import Input from "./UI/Input";
+import InputFlex from "./UI/InputFlex";
 import Select from "./UI/Select";
 import Option from "./UI/Option";
 import Icon from "./UI/Icon";
@@ -233,6 +234,7 @@ const Card = ({ group, deleteGroup, addCategory, addItem, addUser }) => {
               type="text"
               value={description}
               onChange={setDescription}
+              autoFocus
             />
             <Select
               name="categories"
@@ -273,6 +275,7 @@ const Card = ({ group, deleteGroup, addCategory, addItem, addUser }) => {
               type="Checkbox"
               value={recurring}
               onChange={() => setRecurring(!recurring)}
+              flex
             />
             <Button type="submit">Add Item</Button>
           </Form>
@@ -290,8 +293,8 @@ const Card = ({ group, deleteGroup, addCategory, addItem, addUser }) => {
               onChange={setEmail}
               autoFocus
             />
+            <Button type="submit">Add User</Button>
           </Form>
-          <Button type="submit">Add User</Button>
         </Modal>
       )}
     </ListContainer>

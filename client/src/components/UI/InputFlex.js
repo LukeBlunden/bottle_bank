@@ -3,23 +3,32 @@ import styled from "styled-components";
 
 const InputGroup = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
 `;
 
-const Select = ({ name, label, value, onChange, children }) => {
+const InputFlex = ({
+  name,
+  label,
+  type,
+  placeholder,
+  value,
+  onChange,
+  autoFocus,
+}) => {
   return (
     <InputGroup>
       <label htmlFor={name}>{label}</label>
-      <select
+      <input
         name={name}
+        type={type}
+        placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        required
-      >
-        {children}
-      </select>
+        autoFocus={autoFocus}
+        autoComplete="on"
+      />
     </InputGroup>
   );
 };
 
-export default Select;
+export default InputFlex;

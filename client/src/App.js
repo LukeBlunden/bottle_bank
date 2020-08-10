@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import "./App.css";
+import Theme from "./theme/Theme";
 
 import Container from "./components/Container";
 import Navbar from "./components/Navbar";
@@ -61,58 +62,60 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="App">
-        <Navbar />
-        <Switch>
-          <Route path="/expenses">
-            {/* {isAuthenticated ? <ExpensesContainer /> : <Redirect to="/" />} */}
-            {isAuthenticated ? (
-              <Container
-                data={expenses}
-                loading={expensesLoading}
-                getData={getExpenses}
-                addGroup={addExpenseGroup}
-                deleteGroup={deleteExpenseGroup}
-                addCategory={addExpenseCategory}
-                addItem={addExpenseItem}
-                addUser={addSharedUser}
-              />
-            ) : (
-              <Redirect to="/" />
-            )}
-          </Route>
-          <Route path="/income">
-            {isAuthenticated ? (
-              <Container
-                data={income}
-                loading={incomeLoading}
-                getData={getIncome}
-                addGroup={addIncomeGroup}
-                deleteGroup={deleteIncomeGroup}
-                addCategory={addIncomeCategory}
-                addItem={addIncomeItem}
-                // addUser={addSharedUser}
-              />
-            ) : (
-              <Redirect to="/" />
-            )}
-            {/* {isAuthenticated ? <IncomeContainer /> : <Redirect to="/" />} */}
-          </Route>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/register">
-            <Register />
-          </Route>
-          {/* <Route path="/dashboard">
+      <Theme>
+        <div className="App">
+          <Navbar />
+          <Switch>
+            <Route path="/expenses">
+              {/* {isAuthenticated ? <ExpensesContainer /> : <Redirect to="/" />} */}
+              {isAuthenticated ? (
+                <Container
+                  data={expenses}
+                  loading={expensesLoading}
+                  getData={getExpenses}
+                  addGroup={addExpenseGroup}
+                  deleteGroup={deleteExpenseGroup}
+                  addCategory={addExpenseCategory}
+                  addItem={addExpenseItem}
+                  addUser={addSharedUser}
+                />
+              ) : (
+                <Redirect to="/" />
+              )}
+            </Route>
+            <Route path="/income">
+              {isAuthenticated ? (
+                <Container
+                  data={income}
+                  loading={incomeLoading}
+                  getData={getIncome}
+                  addGroup={addIncomeGroup}
+                  deleteGroup={deleteIncomeGroup}
+                  addCategory={addIncomeCategory}
+                  addItem={addIncomeItem}
+                  // addUser={addSharedUser}
+                />
+              ) : (
+                <Redirect to="/" />
+              )}
+              {/* {isAuthenticated ? <IncomeContainer /> : <Redirect to="/" />} */}
+            </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/register">
+              <Register />
+            </Route>
+            {/* <Route path="/dashboard">
             {isAuthenticated ? <Dashboard /> : <Redirect to="/" />}
           </Route> */}
-          <Route path="/">
-            {isAuthenticated ? <Dashboard /> : <Home />}
-            {/* <Home /> */}
-          </Route>
-        </Switch>
-      </div>
+            <Route path="/">
+              {isAuthenticated ? <Dashboard /> : <Home />}
+              {/* <Home /> */}
+            </Route>
+          </Switch>
+        </div>
+      </Theme>
     </BrowserRouter>
   );
 }

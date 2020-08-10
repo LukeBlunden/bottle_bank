@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { isThisMonth } from "date-fns";
+import { isThisMonth, differenceInCalendarMonths } from "date-fns";
 import styled from "styled-components";
 import Theme from "../theme/Theme";
 import { useSelector } from "react-redux";
@@ -39,6 +39,27 @@ const InfoPanel = styled.div`
   }
 `;
 
+const getTotal = (data) => {
+  return data.reduce(
+    (acc, group) => {
+      for (let log of group.log) {
+        if (isThisMonth(new Date(log.selectedDate)) || log.recurring) {
+          acc.current += parseFloat(log.amount, 10);
+        } else if (log.recurring) {
+          acc.current += parseFloat(log.amount, 10);
+          acc.past +=
+            parseFloat(log.amount, 10) *
+            differenceInCalendarMonths(new Date(), new Date(log.selectedDate));
+        } else {
+          acc.past += parseFloat(log.amount, 10);
+        }
+      }
+      return acc;
+    },
+    { current: 0, past: 0 }
+  );
+};
+
 const Dashboard = (props) => {
   const [incomeTotal, setIncomeTotal] = useState({ current: 0, past: 0 });
   const [expensesTotal, setExpensesTotal] = useState({ current: 0, past: 0 });
@@ -51,38 +72,12 @@ const Dashboard = (props) => {
 
   // Reduce income data for current month and past months
   useEffect(() => {
-    const newTotal = income.reduce(
-      (acc, group) => {
-        for (let log of group.log) {
-          if (isThisMonth(new Date(log.selectedDate)) || log.recurring) {
-            acc.current += parseFloat(log.amount, 10);
-          } else {
-            acc.past += parseFloat(log.amount, 10);
-          }
-        }
-        return acc;
-      },
-      { current: 0, past: 0 }
-    );
-    setIncomeTotal(newTotal);
+    setIncomeTotal(getTotal(income));
   }, [income]);
 
   // Reduce income data for current month and past months
   useEffect(() => {
-    const newTotal = expenses.reduce(
-      (acc, group) => {
-        for (let log of group.log) {
-          if (isThisMonth(new Date(log.selectedDate)) || log.recurring) {
-            acc.current += parseFloat(log.amount, 10);
-          } else {
-            acc.past += parseFloat(log.amount, 10);
-          }
-        }
-        return acc;
-      },
-      { current: 0, past: 0 }
-    );
-    setExpensesTotal(newTotal);
+    setExpensesTotal(getTotal(expenses));
   }, [expenses]);
 
   // Calculates income and expense differences for simpler referencing in jsx
@@ -96,7 +91,6 @@ const Dashboard = (props) => {
   return (
     <Theme>
       <React.Fragment>
-        {/* <h1>Dashboard</h1> */}
         <GridContainer>
           <StackedCard>
             <InfoPanel color="var(--col-dark-bg)">
@@ -137,6 +131,17 @@ const Dashboard = (props) => {
             <InfoPanel color="var(--col-main-pos)">
               <p>Annual Performance</p>
               <p>+0%</p>
+            </InfoPanel>
+            <InfoPanel color="var(--col-main-pos)">
+              <p>Income Spent</p>
+              <p>
+                {incomeTotal.current === 0
+                  ? "No Income"
+                  : (
+                      (expensesTotal.current / incomeTotal.current) *
+                      100
+                    ).toFixed(2) + "%"}
+              </p>
             </InfoPanel>
           </StackedCard>
         </GridContainer>

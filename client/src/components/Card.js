@@ -264,6 +264,7 @@ const Card = ({ group, deleteGroup, addCategory, addItem, addUser }) => {
               name="amount"
               label="Amount"
               type="number"
+              innerLabel={currencies[group.currency]}
               value={amount}
               onChange={setAmount}
             />

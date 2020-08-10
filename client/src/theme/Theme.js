@@ -2,8 +2,14 @@ import React from "react";
 import { ThemeProvider } from "styled-components";
 
 const theme = {
-  colors: {
+  color: {
     primaryGreen: "#b2f3da",
+
+    lightGrey: "#b8bbbc",
+    medLightGrey: "#888e91",
+    medGrey: "#6b7377",
+    medDarkGrey: "#4e565a",
+    darkGrey: "#33393c",
   },
 };
 

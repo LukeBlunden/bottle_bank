@@ -87,6 +87,7 @@ const Container = ({
               type="checkbox"
               value={groupShared}
               onChange={setGroupShared}
+              flex
             />
             <Button type="submit">Add Group</Button>
           </Form>

@@ -32,7 +32,14 @@ import {
 
 function App() {
   const dispatch = useDispatch();
-  const { isAuthenticated } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [dispatch]);
+
+  const { isAuthenticated, user, isLoading } = useSelector(
+    (state) => state.auth
+  );
   const { expenses, loading: expensesLoading } = useSelector(
     (state) => state.expenses
   );
@@ -40,9 +47,17 @@ function App() {
     (state) => state.income
   );
 
+  // Get expense and income data
   useEffect(() => {
-    dispatch(loadUser());
-  }, [dispatch]);
+    if (user) {
+      if (income.length === 0 && isLoading === false) {
+        dispatch(getIncome(user._id));
+      }
+      if (expenses.length === 0 && isLoading === false) {
+        dispatch(getExpenses(user._id));
+      }
+    }
+  }, [dispatch, income.length, expenses.length, user, isLoading]);
 
   return (
     <BrowserRouter>

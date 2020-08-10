@@ -7,7 +7,6 @@ import Modal from "./UI/Modal";
 import Table from "./Table";
 import Button from "./UI/Button";
 import Input from "./UI/Input";
-import InputFlex from "./UI/InputFlex";
 import Select from "./UI/Select";
 import Option from "./UI/Option";
 import Icon from "./UI/Icon";
@@ -220,8 +219,8 @@ const Card = ({ group, deleteGroup, addCategory, addItem, addUser }) => {
               onChange={setCategoryName}
               autoFocus
             />
+            <Button type="submit">Add Category</Button>
           </Form>
-          <Button type="submit">Add Category</Button>
         </Modal>
       )}
 

@@ -39,7 +39,8 @@ const InfoPanel = styled.div`
   }
 `;
 
-const getTotal = (data) => {
+// Common logic to to calculate expense and income past and current values
+function getTotal(data) {
   return data.reduce(
     (acc, group) => {
       for (let log of group.log) {
@@ -58,7 +59,7 @@ const getTotal = (data) => {
     },
     { current: 0, past: 0 }
   );
-};
+}
 
 const Dashboard = (props) => {
   const [incomeTotal, setIncomeTotal] = useState({ current: 0, past: 0 });
@@ -97,14 +98,17 @@ const Dashboard = (props) => {
               <p>Current Savings</p>
               <p>{`£${(difference.past + difference.current).toFixed(2)}`}</p>
             </InfoPanel>
+
             <InfoPanel color="var(--col-main-neg)">
               <p>Monthly Expenses</p>
               <p>{`-£${expensesTotal.current.toFixed(2)}`}</p>
             </InfoPanel>
+
             <InfoPanel color="var(--col-main-pos)">
               <p>Monthly Income</p>
               <p>{`+£${incomeTotal.current.toFixed(2)}`}</p>
             </InfoPanel>
+
             <InfoPanel color="var(--col-dark-bg)">
               <p>Initial Savings</p>
               <p>{`£${difference.past.toFixed(2)}`}</p>
@@ -128,10 +132,12 @@ const Dashboard = (props) => {
                 %
               </p>
             </InfoPanel>
+
             <InfoPanel color="var(--col-main-pos)">
               <p>Annual Performance</p>
               <p>+0%</p>
             </InfoPanel>
+
             <InfoPanel color="var(--col-main-pos)">
               <p>Income Spent</p>
               <p>

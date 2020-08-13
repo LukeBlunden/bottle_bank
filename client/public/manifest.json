@@ -3,12 +3,12 @@
   "name": "Bottle Bank",
   "icons": [
     {
-      "src": "assets/logo.png",
+      "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/png"
+      "type": "image/ico"
     },
     {
-      "src": "assets/logo.png",
+      "src": "logo192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
@@ -20,6 +20,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#f4413d",
+  "background_color": "#efece5"
 }
